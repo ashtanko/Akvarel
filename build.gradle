@@ -1,0 +1,47 @@
+buildscript {
+
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.3.0-alpha06'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.61"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    commits = "git rev-list HEAD --first-parent --count".execute().text.toInteger()
+
+    //region VERSIONS
+    compileSdkVersion = 28
+    minSdkVersion = 21
+    targetSdkVersion = 28
+    kotlinVersion = '1.2.61'
+    //endregion
+
+    //region
+    appcompatVersion = '1.0.0-rc01'
+    kotlinVersion = '1.2.61'
+    //endregion
+
+    dependencies = [
+            appcompat: "androidx.appcompat:appcompat:$appcompatVersion",
+            kotlin: "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
+            navigation: "android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha05",
+            junit: "junit:junit:4.12",
+            runner: "androidx.test:runner:1.1.0-alpha4",
+            espresso: "androidx.test.espresso:espresso-core:3.1.0-alpha4",
+    ]
+}
