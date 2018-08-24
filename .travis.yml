@@ -13,7 +13,7 @@ notifications:
 
 env:
   global:
-  - SDK_API=28
+  - SDK_API=P
   - ANDROID_API=27
   - EMULATOR_API_LEVEL=25
   - ANDROID_BUILD_TOOLS=27.0.0
@@ -54,6 +54,7 @@ install:
 - echo y | android update sdk -u -a -t platform-tools
 - echo y | android update sdk -u -a -t build-tools-27.0.3
 - echo y | android update sdk -u -a -t android-27
+- echo y | android update sdk -u -a -t android-28
 - echo y | android update sdk -u -a -t extra-google-m2repository
 - echo y | android update sdk -u -a -t extra-android-m2repository
 - echo y | android update sdk -u -a -t android-sdk-preview-license
@@ -75,7 +76,7 @@ matrix:
 - TEST_TYPE=unit
 
 include:
-- env: ANDROID_TARGET=android-27  ANDROID_ABI=armeabi-v7a
+- env: ANDROID_TARGET=android-28  ANDROID_ABI=armeabi-v7a
 
 allow_failures:
 - env: ANDROID_TARGET=android-14  ANDROID_ABI=armeabi-v7a
@@ -92,6 +93,7 @@ allow_failures:
 - env: ANDROID_TARGET=android-25  ANDROID_ABI=armeabi-v7a
 - env: ANDROID_TARGET=android-26  ANDROID_ABI=armeabi-v7a
 - env: ANDROID_TARGET=android-27  ANDROID_ABI=armeabi-v7a
+- env: ANDROID_TARGET=android-28  ANDROID_ABI=armeabi-v7a
 fast_finish: false
 
 
