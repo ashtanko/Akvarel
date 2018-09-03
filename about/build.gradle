@@ -1,0 +1,51 @@
+apply plugin: 'com.android.dynamic-feature'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+def ext = rootProject.ext
+
+android {
+  compileSdkVersion ext.compileSdkVersion
+
+  defaultConfig {
+    minSdkVersion ext.minSdkVersion
+    targetSdkVersion ext.targetSdkVersion
+    versionCode ext.commitsCount
+    versionName "1.0.0"
+
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+  }
+}
+
+apply from: '../config/feature-signing-config.gradle'
+
+dependencies {
+  def dependencies = ext.deps
+
+  //region
+  implementation project(':app')
+  implementation project(':core')
+  implementation project(':common')
+  //endregion
+
+  //region KOTLIN
+  implementation dependencies.kotlin
+  //endregion
+
+  //region DI
+  implementation dependencies.dagger
+  kapt dependencies.daggerCompiler
+  //endregion
+
+  //region TEST
+  testImplementation dependencies.junit
+  //endregion
+}
+
+kapt {
+  generateStubs = true
+  correctErrorTypes = true
+}
+
+apply from: "../ktlint.gradle"
+apply from: '../jacoco.gradle'

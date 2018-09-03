@@ -1,0 +1,17 @@
+apply from: '../config/common-signing-config.gradle'
+
+android {
+  buildTypes {
+    release {
+      zipAlignEnabled true
+      pseudoLocalesEnabled true
+      debuggable false
+    }
+
+    debug {
+      debuggable true
+      useProguard false
+      testCoverageEnabled true
+    }
+  }
+}

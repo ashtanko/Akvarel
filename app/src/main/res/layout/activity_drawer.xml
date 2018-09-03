@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<me.shtanko.akvarel.installed.AkvarelDrawer xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/akvarelDrawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/teal"
+    android:orientation="vertical"
+    >
+
+</me.shtanko.akvarel.installed.AkvarelDrawer>

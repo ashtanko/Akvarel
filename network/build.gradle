@@ -1,0 +1,65 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+def ext = rootProject.ext
+
+final CONFIG_PROPERTIES_FILE = 'config/config.properties'
+def props = new Properties()
+
+if (rootProject.file(CONFIG_PROPERTIES_FILE).exists()) {
+  props.load(new FileInputStream(rootProject.file(CONFIG_PROPERTIES_FILE)))
+}
+
+android {
+  compileSdkVersion ext.compileSdkVersion
+
+  defaultConfig {
+    minSdkVersion ext.minSdkVersion
+    targetSdkVersion ext.targetSdkVersion
+    versionCode ext.commitsCount
+    versionName "1.0.0"
+
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    buildConfigField "String", "ENDPOINT", '"https://pixabay.com/"'
+    buildConfigField "String", "API_KEY", "\"${props['pixabay.api.key']}\""
+  }
+}
+
+dependencies {
+  def dependencies = ext.deps
+
+  implementation project(':core')
+
+  //region KOTLIN
+  implementation dependencies.kotlin
+  //endregion
+
+  //region NETWORK/IO
+  implementation dependencies.retrofit
+  implementation dependencies.retrofitConverterGson
+  implementation dependencies.okhttp
+  implementation dependencies.gson
+  implementation dependencies.adapterRxjava
+  implementation dependencies.loggingInterceptor
+  //endregion
+
+  //region RX
+  implementation dependencies.rxjava
+  implementation dependencies.rxandroid
+  //endregion
+
+  //region DI
+  kapt dependencies.daggerCompiler
+  implementation dependencies.dagger
+  //endregion
+
+  //region TEST
+  testImplementation dependencies.junit
+  androidTestImplementation dependencies.runner
+  androidTestImplementation dependencies.espressoCore
+  //endregion
+}
+
+apply from: '../jacoco.gradle'

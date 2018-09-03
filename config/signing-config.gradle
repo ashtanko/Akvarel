@@ -1,0 +1,22 @@
+apply from: '../config/common-signing-config.gradle'
+
+android {
+  buildTypes {
+    release {
+      minifyEnabled true
+      zipAlignEnabled true
+      pseudoLocalesEnabled true
+      debuggable false
+      signingConfig signingConfigs.release
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), '../proguard.pro'
+    }
+
+    debug {
+      debuggable true
+      minifyEnabled true
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), '../proguard.pro'
+      useProguard false
+      testCoverageEnabled true
+    }
+  }
+}

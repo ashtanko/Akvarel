@@ -1,0 +1,40 @@
+final RELEASE_PROPERTIES_FILE = 'config/release.properties'
+final DEBUG_PROPERTIES_FILE = 'config/debug.properties'
+
+def props = new Properties()
+
+if (rootProject.file(RELEASE_PROPERTIES_FILE).exists()) {
+  props.load(new FileInputStream(rootProject.file(RELEASE_PROPERTIES_FILE)))
+} else {
+  props.load(new FileInputStream(rootProject.file(DEBUG_PROPERTIES_FILE)))
+}
+
+android {
+
+  signingConfigs {
+    debug {
+      storeFile file(props['STORE_FILE'])
+      keyAlias props['KEY_ALIAS']
+      storePassword props['STORE_PASSWORD']
+      keyPassword props['KEY_PASSWORD']
+    }
+
+    release {
+      storeFile file(props['STORE_FILE'])
+      keyAlias props['KEY_ALIAS']
+      storePassword props['STORE_PASSWORD']
+      keyPassword props['KEY_PASSWORD']
+    }
+  }
+
+  buildTypes {
+    release {
+      signingConfig signingConfigs.release
+    }
+
+    debug {
+      signingConfig signingConfigs.debug
+    }
+  }
+
+}

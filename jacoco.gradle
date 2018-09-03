@@ -1,0 +1,136 @@
+/*
+ * Copyright 2017 Alexey Shtanko
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+apply plugin: 'jacoco'
+apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'org.sonarqube'
+
+final JACOCO_VERSION = '0.7.2.201409121644'
+
+jacoco {
+  toolVersion = JACOCO_VERSION
+}
+
+android {
+  testOptions {
+    unitTests.all {
+      jacoco {
+        includeNoLocationClasses = true
+      }
+    }
+  }
+}
+
+project.afterEvaluate {
+  // Grab all build types and product flavors
+  def buildTypes = android.buildTypes.collect { type -> type.name
+  }
+  def productFlavors = android.productFlavors.collect { flavor -> flavor.name
+  }
+  // When no product flavors defined, use empty
+  if (!productFlavors) productFlavors.add('')
+  productFlavors.each { productFlavorName ->
+    buildTypes.each { buildTypeName ->
+      def sourceName, sourcePath
+      if (!productFlavorName) {
+        sourceName = sourcePath = "${buildTypeName}"
+      } else {
+        sourceName = "${productFlavorName}${buildTypeName.capitalize()}"
+        sourcePath = "${productFlavorName}/${buildTypeName}"
+      }
+
+      def testTaskName = "test${sourceName.capitalize()}UnitTest"
+
+      task "create${sourceName.capitalize()}UnitTestCoverageReport"(type: JacocoReport,
+          dependsOn: "$testTaskName") {
+
+        group = "Reporting"
+
+        description = "Generate Jacoco coverage reports on the ${sourceName.capitalize()} build."
+
+        reports {
+          xml.enabled = true
+          html.enabled = true
+        }
+
+        def fileFilter = ['**/R.class',
+                          '**/R$*.class',
+                          '**/BuildConfig.*',
+                          '**/Manifest*.*',
+                          '**/*Test*.*', '**/*$ViewInjector*.*',
+                          '**/*$ViewBinder*.*',
+                          '**/*Module.*',
+                          '**/*Dagger*.*',
+                          '**/*MembersInjector*.*',
+                          '**/*_Provide*Factory*.*',
+                          '**/*_Factory.*',
+                          '**/*$*$*.*',
+                          'android/**/*.*']
+
+        FileTree tree = fileTree(dir: "${project.buildDir}/tmp/kotlin-classes/${sourceName}UnitTest")
+
+        tree.setExcludes(fileFilter)
+        tree.setDir("${project.buildDir}/intermediates/classes/$productFlavorName/$buildTypeName")
+        tree.setDir("${project.buildDir}/tmp/kotlin-classes/${sourceName}")
+
+        sourceDirectories =
+            files([android.sourceSets.main.java.srcDirs, "src/$productFlavorName/kotlin"])
+        classDirectories = files([tree])
+        executionData = fileTree(dir: project.projectDir, includes: ['**/*.exec', '**/*.ec'])
+      }
+
+      // dirty kotlin jacoco hack
+      task "create${sourceName.capitalize()}UnitTestCoverageReportKotlin"(
+          dependsOn: "create${sourceName.capitalize()}UnitTestCoverageReport") {
+
+        doLast {
+          def strHtml = 'html'
+          def strUTF8 = 'UTF-8'
+          def strHref = 'href=\"'
+          def strResources = '.resources'
+
+          def indexFileName = "index.$strHtml"
+          def indexSourceFileName = "index.source.$strHtml"
+          def reports = new File(project.buildDir,
+              "/reports/jacoco/create${sourceName.capitalize()}UnitTestCoverageReport/$strHtml")
+          def index = new File(reports, indexFileName).getText(strUTF8)
+          def footer = '<div class="footer">'
+          def result = new StringBuilder(index.substring(0, index.indexOf(footer)))
+
+          reports.eachDirMatch({ !new File(it).name.startsWith(".") }) { dir ->
+            def moduleIndex = new File(dir, indexSourceFileName)
+            def content = moduleIndex.getText(strUTF8)
+                .replaceAll("\\.\\./\\$strResources", strResources)
+                .replaceAll(strHref, "$strHref${dir.name}/")
+            result.append(content.substring(content.indexOf('<h1>'), content.indexOf(footer)))
+          }
+          result.append(index.substring(index.indexOf(footer)))
+
+          def output = new File(reports, indexSourceFileName)
+          output.delete()
+
+          output << result.toString()
+        }
+      }
+    }
+  }
+}
+
+coveralls {
+  jacocoReportPath =
+      "${buildDir}/reports/jacoco/createDevDebugUnitTestCoverageReport/createDevDebugUnitTestCoverageReport.xml"
+}

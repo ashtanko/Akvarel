@@ -1,0 +1,30 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="me.shtanko.akvarel.about">
+
+  <application>
+    <activity
+        android:name=".AboutActivity">
+      <intent-filter>
+        <!--<category android:name="android.intent.category.BROWSABLE"/>-->
+        <category android:name="android.intent.category.DEFAULT"/>
+
+        <action android:name="android.intent.action.VIEW"/>
+
+        <!--<data android:scheme="http"/>-->
+        <!--<data android:scheme="https"/>-->
+        <!--<data android:host="akvarel.com"/>-->
+        <!--<data android:path="/about"/>-->
+
+      </intent-filter>
+    </activity>
+  </application>
+
+  <dist:module
+      dist:instant="false"
+      dist:onDemand="true"
+      dist:title="@string/title_about">
+    <dist:fusing dist:include="true"/>
+  </dist:module>
+</manifest>
+
