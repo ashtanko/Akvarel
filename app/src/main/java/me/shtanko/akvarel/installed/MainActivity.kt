@@ -1,48 +1,53 @@
 package me.shtanko.akvarel.installed
 
 import android.os.Bundle
-import android.os.Handler
-import android.view.LayoutInflater
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.crashlytics.android.Crashlytics
 import me.shtanko.akvarel.R
-import me.shtanko.common.extensions.About
-import me.shtanko.common.extensions.intentTo
-import me.shtanko.core.utils.AndroidUtils
+import me.shtanko.akvarel.installed.di.MainComponent
+import me.shtanko.akvarel.installed.widget.AkvarelBottomNavigationView
+import me.shtanko.collection.CollectionFragment
+import me.shtanko.common.ui.BaseFragment
+import me.shtanko.core.App
+import me.shtanko.core.Logger
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
+  @Inject
+  lateinit var logger: Logger
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_drawer)
+    inject()
+    setContentView(R.layout.activity_main)
 
+    val collection = CollectionFragment.instance
 
-    AndroidUtils.checkDisplaySize(this, resources.configuration)
+    val bottomView: AkvarelBottomNavigationView =
+      findViewById(R.id.bottomNavigation)
 
-    val drawer = findViewById<AkvarelDrawer>(R.id.akvarelDrawer)
+    bottomView.setOnNavigationItemSelectedListener {
 
-    val drawerLayout =
-      LayoutInflater.from(applicationContext).inflate(R.layout.layout_drawer, null) as LinearLayout
+      when (it.itemId) {
+        R.id.navigationCollection -> {
+          replaceFragment(collection)
+          return@setOnNavigationItemSelectedListener true
+        }
+      }
 
-    drawer.setDrawerLayout(drawerLayout)
-
-    Handler().postDelayed({
-      //drawer.openDrawer()
-    }, 1000)
-
-    //drawer.openDrawer(false)
-
-    //ActivityLaunchHelper.launchCategories(this)
-    //supportFinishAfterTransition()
-
-    if (savedInstanceState == null) {
-
+      return@setOnNavigationItemSelectedListener false
     }
 
-//    startActivity(
-//        intentTo(About)
-//        //, ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
-//    )
+  }
+
+  private fun replaceFragment(fragment: BaseFragment) {
+    supportFragmentManager.beginTransaction()
+        .replace(R.id.container, fragment)
+        .commit()
+  }
+
+  private fun inject() {
+    MainComponent.Initializer.init((applicationContext as App).getAppComponent())
+        .inject(this@MainActivity)
   }
 }

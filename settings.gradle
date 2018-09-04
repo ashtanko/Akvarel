@@ -15,7 +15,7 @@
  *
  */
 
-include    ':core', ':app', ':common', ':network', ':about'
+include    ':core', ':app', ':common', ':network', ':about', ':settings', ':collection'
 include ':search'
 
 //include ':instantapp'

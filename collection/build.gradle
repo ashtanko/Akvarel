@@ -22,14 +22,9 @@
  * SOFTWARE.
  */
 
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'io.fabric'
-
-repositories {
-  maven { url 'https://maven.fabric.io/public' }
-}
 
 def ext = rootProject.ext
 
@@ -41,36 +36,10 @@ android {
     targetSdkVersion ext.targetSdkVersion
     versionCode ext.commitsCount
     versionName "1.0.0"
+
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
   }
-
-  // When building Android App Bundles, the splits block is ignored.
-  splits {}
-
-  // Instead, use the bundle block to control which types of configuration APKs
-  // you want your app bundle to support.
-  bundle {
-    language {
-      // Specifies that the app bundle should not support
-      // configuration APKs for language resources. These
-      // resources are instead packaged with each base and
-      // dynamic feature APK.
-      enableSplit = false
-    }
-    density {
-      // This property is set to true by default.
-      enableSplit = true
-    }
-    abi {
-      // This property is set to true by default.
-      enableSplit = true
-    }
-  }
-
-  dynamicFeatures = [":about", ":search", ":settings"]
 }
-
-//apply from: '../config/apk.gradle'
-apply from: '../config/base-feature-signing-config.gradle'
 
 dependencies {
   def dependencies = ext.deps
@@ -78,11 +47,14 @@ dependencies {
   implementation project(':core')
   implementation project(':common')
   implementation project(':network')
-  implementation project(':collection')
 
-  //region DI
-  implementation dependencies.dagger
-  kapt dependencies.daggerCompiler
+  //region KOTLIN
+  implementation dependencies.kotlin
+  //endregion
+
+  //region RX
+  implementation dependencies.rxjava
+  implementation dependencies.rxandroid
   //endregion
 
   //region ANDROID SDK
@@ -91,12 +63,10 @@ dependencies {
   api dependencies.constraintlayout
   //endregion
 
-  //region KOTLIN
-  api dependencies.kotlin
+  //region DI
+  kapt dependencies.daggerCompiler
+  implementation dependencies.dagger
   //endregion
-
-  implementation 'com.google.firebase:firebase-core:16.0.3'
-  implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
 
   //region TEST
   testImplementation dependencies.junit
@@ -105,4 +75,4 @@ dependencies {
   //endregion
 }
 
-apply plugin: 'com.google.gms.google-services'
+apply from: '../jacoco.gradle'

@@ -13,3 +13,5 @@ interface ToolsProvider {
 }
 
 interface AboutProvider
+
+interface CollectionProvider

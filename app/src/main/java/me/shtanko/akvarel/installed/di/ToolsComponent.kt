@@ -9,6 +9,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
 import me.shtanko.akvarel.installed.tools.Ours
+import me.shtanko.collection.CollectionViewModel
 import me.shtanko.common.di.ViewModelKey
 import me.shtanko.core.App
 import me.shtanko.core.Logger
@@ -44,6 +45,12 @@ abstract class ViewModelModule {
   @IntoMap
   @ViewModelKey(MainViewModel::class)
   abstract fun bindsMainViewModel(viewModel: MainViewModel): ViewModel
+
+  @Binds
+  @IntoMap
+  @ViewModelKey(CollectionViewModel::class)
+  abstract fun bindsCollectionViewModel(viewModel: CollectionViewModel): ViewModel
+
 
   @Binds
   abstract fun bindsViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

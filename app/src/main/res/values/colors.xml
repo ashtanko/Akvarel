@@ -19,5 +19,9 @@
   <color name="spacer_grey">#e0e0e0</color>
   <color name="white_90">#e6ffffff</color>
 
+  <color name="grey_20">#cccccc</color>
+
+  <color name="blue_grey_700">#455A64</color>
+
 
 </resources>

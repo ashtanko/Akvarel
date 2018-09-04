@@ -8,6 +8,6 @@ object Ours : Logger {
   private const val TAG: String = "AKVAREL_LOG"
 
   override fun d(vararg variables: Any) {
-    Log.d(TAG, variables.toString())
+    Log.d(TAG, variables.contentToString())
   }
 }
