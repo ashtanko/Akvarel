@@ -40,13 +40,17 @@ android {
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
   }
 }
+apply from: '../config/kotlin-source-sets.gradle'
 
 dependencies {
   def dependencies = ext.deps
 
+  //region modules
   implementation project(':core')
+  implementation project(':model')
   implementation project(':common')
   implementation project(':network')
+  //endergion
 
   //region KOTLIN
   implementation dependencies.kotlin
@@ -75,4 +79,5 @@ dependencies {
   //endregion
 }
 
+apply from: "../ktlint.gradle"
 apply from: '../jacoco.gradle'

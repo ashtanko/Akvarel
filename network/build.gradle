@@ -27,10 +27,15 @@ android {
   }
 }
 
+apply from: '../config/kotlin-source-sets.gradle'
+
 dependencies {
   def dependencies = ext.deps
 
+  //region modules
   implementation project(':core')
+  implementation project(':model')
+  //endregion
 
   //region KOTLIN
   implementation dependencies.kotlin
@@ -62,4 +67,5 @@ dependencies {
   //endregion
 }
 
+apply from: "../ktlint.gradle"
 apply from: '../jacoco.gradle'

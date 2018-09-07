@@ -18,6 +18,7 @@ android {
 }
 
 apply from: '../config/feature-signing-config.gradle'
+apply from: '../config/kotlin-source-sets.gradle'
 
 dependencies {
 
@@ -39,4 +40,5 @@ dependencies {
   androidTestImplementation dependencies.espressoCore
 }
 
+apply from: "../ktlint.gradle"
 apply from: '../jacoco.gradle'

@@ -179,6 +179,5 @@ hs_err_pid*
 !app/src/dev/google-services.json
 config/*.json
 fastlane
-categories
 mainscreen
 ./about/about_sample

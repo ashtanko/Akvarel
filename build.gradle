@@ -15,8 +15,6 @@
  *
  */
 
-
-
 apply from: 'ci.gradle'
 
 buildscript {
@@ -79,7 +77,7 @@ ext {
   kotlin_version = '1.2.60'
   espressoVersion = '3.1.0-alpha4'
   runnerRulesVersion = '1.1.0-alpha3'
-  roomVersion = "1.1.0"
+  roomVersion = "1.1.1"
   glideVersion = "4.8.0-SNAPSHOT"
   rxjavaVersion = '2.2.0'
   rxandroidVersion = '2.0.2'
@@ -89,6 +87,9 @@ ext {
   ktlintVersion = '0.24.0'
   lifecycleVersion = '1.1.1'
   leakCanaryVersion = '1.6.1'
+  firebaseVersion = '16.0.3'
+  crashlyticsVersion = '2.9.5'
+  flexboxVersion = '0.3.2'
   //endregion
 
   deps = [
@@ -97,6 +98,10 @@ ext {
       constraintlayout: "androidx.constraintlayout:constraintlayout:${constraintlayoutVersion}",
       lifecycle: "android.arch.lifecycle:extensions:${lifecycleVersion}",
       lifecycleCompiler: "android.arch.lifecycle:compiler:${lifecycleVersion}",
+      //endregion
+
+      //region GOOGLE
+      firebase: "com.google.firebase:firebase-core:${firebaseVersion}",
       //endregion
 
       //region DI
@@ -165,12 +170,14 @@ ext {
 
       //region UI
       material: "com.google.android.material:material:${materialVersion}",
+      flexbox: "com.google.android:flexbox:${flexboxVersion}",
       //endregion
 
       //region OTHER
       ktx: 'androidx.core:core-ktx:1.0.0-alpha1',
       hockeyapp: "net.hockeyapp.android:HockeySDK:${hockeyappVersion}",
       ktlint: "com.github.shyiko:ktlint:0.27.0",
+      crashlytics: "com.crashlytics.sdk.android:crashlytics:${crashlyticsVersion}",
       //endregion
 
       //region memory leak detection

@@ -69,16 +69,22 @@ android {
   dynamicFeatures = [":about", ":search", ":settings"]
 }
 
-//apply from: '../config/apk.gradle'
+apply from: '../config/apk.gradle'
 apply from: '../config/base-feature-signing-config.gradle'
+apply from: '../config/kotlin-source-sets.gradle'
 
 dependencies {
   def dependencies = ext.deps
 
+  //region modules
   implementation project(':core')
   implementation project(':common')
   implementation project(':network')
+
   implementation project(':collection')
+  implementation project(':categories')
+  implementation project(':other')
+  //endregion
 
   //region DI
   implementation dependencies.dagger
@@ -95,8 +101,8 @@ dependencies {
   api dependencies.kotlin
   //endregion
 
-  implementation 'com.google.firebase:firebase-core:16.0.3'
-  implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
+  implementation dependencies.firebase
+  implementation dependencies.crashlytics
 
   //region TEST
   testImplementation dependencies.junit
@@ -106,3 +112,5 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+apply from: "../ktlint.gradle"
+apply from: '../jacoco.gradle'

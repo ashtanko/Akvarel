@@ -4,4 +4,6 @@
   <string name="title_search">Search</string>
   <string name="title_settings">Settings</string>
   <string name="tab_collection_title">Collection</string>
+  <string name="tab_categories_title">Categories</string>
+  <string name="tab_settings_title">Settings</string>
 </resources>

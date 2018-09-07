@@ -27,19 +27,19 @@
 
   <item
       android:id="@+id/navigationCollection"
-      android:icon="@drawable/ic_arrow_back"
+      android:icon="@drawable/ic_all_out"
       android:title="@string/tab_collection_title"/>
 
 
   <item
-      android:id="@+id/navigationDraft"
-      android:icon="@drawable/ic_arrow_back"
-      android:title="Test"/>
+      android:id="@+id/navigationCategories"
+      android:icon="@drawable/ic_apps"
+      android:title="@string/tab_categories_title"/>
 
 
   <item
       android:id="@+id/navigationSettings"
-      android:icon="@drawable/ic_arrow_back"
-      android:title="Test"/>
+      android:icon="@drawable/ic_settings"
+      android:title="@string/tab_settings_title"/>
 
 </menu>

@@ -16,6 +16,8 @@ android {
   }
 }
 
+apply from: '../config/kotlin-source-sets.gradle'
+
 dependencies {
   def dependencies = ext.deps
 
@@ -36,4 +38,5 @@ dependencies {
   //endregion
 }
 
+apply from: "../ktlint.gradle"
 apply from: '../jacoco.gradle'

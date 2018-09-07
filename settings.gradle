@@ -15,9 +15,16 @@
  *
  */
 
-include    ':core', ':app', ':common', ':network', ':about', ':settings', ':collection'
+//region screens modules
+include ':app'
+include ':about'
+include ':settings'
+include ':collection'
+include ':categories'
+include ':other'
 include ':search'
+//endregion
 
-//include ':instantapp'
-//include ':categories'
-//include ':mainscreen'
+//region other modules
+include ':core', ':common', ':network', ':model', ':database'
+//endregion

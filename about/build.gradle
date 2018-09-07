@@ -18,11 +18,12 @@ android {
 }
 
 apply from: '../config/feature-signing-config.gradle'
+apply from: '../config/kotlin-source-sets.gradle'
 
 dependencies {
   def dependencies = ext.deps
 
-  //region
+  //region modules
   implementation project(':app')
   implementation project(':core')
   implementation project(':common')
