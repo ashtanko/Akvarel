@@ -30,11 +30,7 @@ import dagger.Binds
 import dagger.Component
 import dagger.Module
 import dagger.multibindings.IntoMap
-import me.shtanko.collection.CollectionFragment
-import me.shtanko.collection.CollectionRepositoryImpl
-import me.shtanko.collection.CollectionUseCase
-import me.shtanko.collection.CollectionUseCaseImpl
-import me.shtanko.collection.CollectionViewModel
+import me.shtanko.collection.*
 import me.shtanko.common.di.ViewModelKey
 import me.shtanko.common.viewmodel.ViewModelFactory
 import me.shtanko.core.collection.CollectionRepository
@@ -48,71 +44,71 @@ import me.shtanko.network.di.NetworkProvider
 @Module
 interface CollectionModule {
 
-  @FragmentScope
-  @Binds
-  fun bindsCollectionUseCase(impl: CollectionUseCaseImpl): CollectionUseCase
+    @FragmentScope
+    @Binds
+    fun bindsCollectionUseCase(impl: CollectionUseCaseImpl): CollectionUseCase
 
-  @Binds
-  @IntoMap
-  @ViewModelKey(CollectionViewModel::class)
-  abstract fun bindsCollectionViewModel(viewModel: CollectionViewModel): ViewModel
+    @Binds
+    @IntoMap
+    @ViewModelKey(CollectionViewModel::class)
+    abstract fun bindsCollectionViewModel(viewModel: CollectionViewModel): ViewModel
 
-  @Binds
-  abstract fun bindsViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+    @Binds
+    abstract fun bindsViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
 }
 
 @Module
 interface CollectionRepoModule {
 
-  @Binds
-  fun bindsCollectionRepo(impl: CollectionRepositoryImpl): CollectionRepository
+    @Binds
+    fun bindsCollectionRepo(impl: CollectionRepositoryImpl): CollectionRepository
 }
 
 @Component(
-    dependencies = [ToolsProvider::class, NetworkProvider::class],
-    modules = [CollectionRepoModule::class]
+        dependencies = [ToolsProvider::class, NetworkProvider::class],
+        modules = [CollectionRepoModule::class]
 )
 interface CollectionRepoComponent : CollectionProvider {
 
-  class Initializer private constructor() {
-    companion object {
-      fun init(toolsProvider: ToolsProvider): CollectionProvider {
+    class Initializer private constructor() {
+        companion object {
+            fun init(toolsProvider: ToolsProvider): CollectionProvider {
 
-        val networkProvider = DaggerNetworkComponent.builder()
-            .toolsProvider(toolsProvider)
-            .build()
+                val networkProvider = DaggerNetworkComponent.builder()
+                        .toolsProvider(toolsProvider)
+                        .build()
 
-        return DaggerCollectionRepoComponent.builder()
-            .toolsProvider(toolsProvider)
-            .networkProvider(networkProvider)
-            .build()
+                return DaggerCollectionRepoComponent.builder()
+                        .toolsProvider(toolsProvider)
+                        .networkProvider(networkProvider)
+                        .build()
 
-      }
+            }
+        }
     }
-  }
 
 }
 
 @Component(
-    dependencies = [ApplicationProvider::class],
-    modules = [CollectionModule::class]
+        dependencies = [ApplicationProvider::class],
+        modules = [CollectionModule::class]
 )
 @FragmentScope
 interface CollectionComponent {
 
-  fun inject(fragment: CollectionFragment)
+    fun inject(fragment: CollectionFragment)
 
-  class Initializer private constructor() {
-    companion object {
-      fun init(
-        applicationProvider: ApplicationProvider
-      ): CollectionComponent {
+    class Initializer private constructor() {
+        companion object {
+            fun init(
+                    applicationProvider: ApplicationProvider
+            ): CollectionComponent {
 
-        return DaggerCollectionComponent.builder()
-            .applicationProvider(applicationProvider)
-            .build()
-      }
+                return DaggerCollectionComponent.builder()
+                        .applicationProvider(applicationProvider)
+                        .build()
+            }
+        }
     }
-  }
 }

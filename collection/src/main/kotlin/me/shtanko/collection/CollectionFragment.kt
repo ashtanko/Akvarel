@@ -29,7 +29,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import io.shtanko.collection.R
 import me.shtanko.collection.di.CollectionComponent
 import me.shtanko.common.extensions.observe
 import me.shtanko.common.extensions.viewModel
@@ -40,43 +39,43 @@ import javax.inject.Inject
 
 class CollectionFragment : BaseFragment() {
 
-  companion object {
-    val instance = CollectionFragment()
-  }
-
-  @Inject
-  lateinit var logger: Logger
-
-  @Inject
-  lateinit var viewModelFactory: ViewModelProvider.Factory
-
-  private lateinit var collectionViewModel: CollectionViewModel
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    CollectionComponent.Initializer.init((activity?.applicationContext as App).getAppComponent())
-        .inject(this@CollectionFragment)
-
-    collectionViewModel = viewModel(viewModelFactory) {
-      observe(data, ::handleRun)
+    companion object {
+        val instance = CollectionFragment()
     }
 
-    logger.d("EEEEE", collectionViewModel)
-  }
+    @Inject
+    lateinit var logger: Logger
 
-  private fun handleRun(command: CollectionViewModel.Command?) {
-    command?.let {
-      logger.d("handleRun", it)
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private lateinit var collectionViewModel: CollectionViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        CollectionComponent.Initializer.init((activity?.applicationContext as App).getAppComponent())
+                .inject(this@CollectionFragment)
+
+        collectionViewModel = viewModel(viewModelFactory) {
+            observe(data, ::handleRun)
+        }
+
+        logger.d("EEEEE", collectionViewModel)
     }
-  }
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    return LayoutInflater.from(activity)
-        .inflate(R.layout.fragment_collection, container, false)
-  }
+    private fun handleRun(command: CollectionViewModel.Command?) {
+        command?.let {
+            logger.d("handleRun", it)
+        }
+    }
+
+    override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
+        return LayoutInflater.from(activity)
+                .inflate(R.layout.fragment_collection, container, false)
+    }
 
 }

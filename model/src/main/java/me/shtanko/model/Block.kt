@@ -22,8 +22,8 @@
  * SOFTWARE.
  */
 
-package io.shtanko.model
+package me.shtanko.model
 
 data class Block(
-  val title: String
+        val title: String
 )

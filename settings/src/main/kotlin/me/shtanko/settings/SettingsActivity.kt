@@ -22,6 +22,17 @@
  * SOFTWARE.
  */
 
-package me.shtanko.categories
+package me.shtanko.settings
 
-class CategoriesAdapter
+import android.os.Bundle
+import me.shtanko.common.ui.BaseActivity
+
+class SettingsActivity : BaseActivity() {
+
+  override fun onCreate(
+    savedInstanceState: Bundle?
+  ) {
+    super.onCreate(savedInstanceState)
+  }
+
+}

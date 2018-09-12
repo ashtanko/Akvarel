@@ -28,15 +28,15 @@ import me.shtanko.core.collection.CollectionRepository
 import javax.inject.Inject
 
 interface CollectionUseCase {
-  fun loadCollection()
+    fun loadCollection()
 }
 
 class CollectionUseCaseImpl @Inject constructor(
-  val repo: CollectionRepository
+        val repo: CollectionRepository
 ) : CollectionUseCase {
-  override fun loadCollection() {
-    repo.getCollection()
-  }
+    override fun loadCollection() {
+        repo.getCollection()
+    }
 
 }
 

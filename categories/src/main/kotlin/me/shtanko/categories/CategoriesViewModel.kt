@@ -28,11 +28,11 @@ import androidx.lifecycle.ViewModel
 import javax.inject.Inject
 
 class CategoriesViewModel @Inject constructor(
-  private val categoriesUseCase: CategoriesUseCase
+        private val categoriesUseCase: CategoriesUseCase
 ) : ViewModel() {
 
-  init {
+    init {
 
-  }
+    }
 
 }

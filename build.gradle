@@ -30,7 +30,7 @@ buildscript {
     google()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.3.0-alpha08'
+    classpath 'com.android.tools.build:gradle:3.3.0-alpha09'
     classpath "com.diffplug.spotless:spotless-plugin-gradle:3.14.0"
     classpath 'com.dicedmelon.gradle:jacoco-android:0.1.2'
     classpath 'org.codehaus.groovy:groovy-all:2.4.12'
@@ -62,7 +62,7 @@ allprojects {
 }
 
 ext {
-  commitsCount = "git rev-list HEAD --first-parent --count".execute().text.toInteger() + 113
+  commitsCount = "git rev-list HEAD --first-parent --count".execute().text.toInteger() + 114
 
   //region VERSION CONSTANTS
   compileSdkVersion = 28

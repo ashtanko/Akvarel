@@ -22,16 +22,16 @@
  * SOFTWARE.
  */
 
-package io.shtanko.database.di
+package me.shtanko.database.di
 
 import android.content.Context
 import androidx.room.Room
 import dagger.Component
 import dagger.Module
 import dagger.Provides
-import io.shtanko.database.APP_DATABASE_NAME
-import io.shtanko.database.AppDatabase
 import me.shtanko.core.di.ToolsProvider
+import me.shtanko.database.APP_DATABASE_NAME
+import me.shtanko.database.AppDatabase
 import javax.inject.Singleton
 
 interface DatabaseProvider
@@ -44,17 +44,19 @@ class DaoModule {
 @Module(includes = [DaoModule::class])
 class DatabaseModule {
 
-  @Singleton
-  @Provides
-  fun provideDatabase(context: Context): AppDatabase {
-    return Room.databaseBuilder(context, AppDatabase::class.java, APP_DATABASE_NAME)
-        .build()
-  }
+    @Singleton
+    @Provides
+    fun provideDatabase(context: Context): AppDatabase {
+        return Room.databaseBuilder(context, AppDatabase::class.java,
+                APP_DATABASE_NAME
+        )
+                .build()
+    }
 }
 
 @Singleton
 @Component(
-    dependencies = [ToolsProvider::class],
-    modules = [DatabaseModule::class]
+        dependencies = [ToolsProvider::class],
+        modules = [DatabaseModule::class]
 )
 interface DatabaseComponent : DatabaseProvider

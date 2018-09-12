@@ -5,15 +5,15 @@ import me.shtanko.core.Logger
 import me.shtanko.core.collection.CollectionRepository
 
 interface ApplicationProvider : ToolsProvider,
-    CollectionProvider
+        CollectionProvider
 
 interface ToolsProvider {
-  fun provideContext(): App
-  fun provideLogger(): Logger
+    fun provideContext(): App
+    fun provideLogger(): Logger
 }
 
 interface AboutProvider
 
 interface CollectionProvider {
-  fun provideCollectionRepo(): CollectionRepository
+    fun provideCollectionRepo(): CollectionRepository
 }

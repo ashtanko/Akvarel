@@ -9,8 +9,8 @@ import org.junit.Test
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class TmpUnitTest {
-  @Test
-  fun `core module tmp solution addition is correct`() {
-    assertEquals(4, 2 + 2)
-  }
+    @Test
+    fun `core module tmp solution addition is correct`() {
+        assertEquals(4, 2 + 2)
+    }
 }

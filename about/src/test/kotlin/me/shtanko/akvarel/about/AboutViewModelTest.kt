@@ -9,15 +9,15 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class AboutViewModelTest {
 
-  private lateinit var aboutViewModel: AboutViewModel
+    private lateinit var aboutViewModel: AboutViewModel
 
-  @Before
-  fun setUp() {
-    aboutViewModel = AboutViewModel()
-  }
+    @Before
+    fun setUp() {
+        aboutViewModel = AboutViewModel()
+    }
 
-  @Test
-  fun `tmp solution view model test`() {
-    Assert.assertTrue(aboutViewModel.returnParam(true))
-  }
+    @Test
+    fun `tmp solution view model test`() {
+        Assert.assertTrue(aboutViewModel.returnParam(true))
+    }
 }

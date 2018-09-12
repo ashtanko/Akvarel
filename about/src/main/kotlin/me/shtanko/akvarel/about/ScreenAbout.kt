@@ -5,12 +5,12 @@ import me.shtanko.common.ui.BaseActivity
 
 class AboutActivity : BaseActivity() {
 
-  override fun onCreate(
-    savedInstanceState: Bundle?
-  ) {
-    super.onCreate(savedInstanceState)
+    override fun onCreate(
+            savedInstanceState: Bundle?
+    ) {
+        super.onCreate(savedInstanceState)
 
-    setContentView(R.layout.activity_about)
-  }
+        setContentView(R.layout.activity_about)
+    }
 
 }

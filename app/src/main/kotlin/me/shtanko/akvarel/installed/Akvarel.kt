@@ -13,47 +13,47 @@ import javax.inject.Inject
 
 class Akvarel : Application(), App {
 
-  val appComponent: AppComponent by lazy { AppComponent.Initializer.init(this@Akvarel) }
+    val appComponent: AppComponent by lazy { AppComponent.Initializer.init(this@Akvarel) }
 
-  @Inject
-  lateinit var logger: Logger
+    @Inject
+    lateinit var logger: Logger
 
-  override fun onCreate() {
-    strictMode()
-    super.onCreate()
-    appComponent.inject(this)
+    override fun onCreate() {
+        strictMode()
+        super.onCreate()
+        appComponent.inject(this)
 
-    logger.startPoint()
-    logger.d("LOL: $logger")
+        logger.startPoint()
+        logger.d("LOL: $logger")
 
-    val fabric = Fabric.Builder(this)
-        .kits(Crashlytics())
-        .debuggable(true)
-        .build()
-    Fabric.with(fabric)
-  }
-
-  override fun getAppComponent(): ApplicationProvider = appComponent
-
-  private fun strictMode() {
-    if (BuildConfig.DEBUG) {
-      StrictMode.setThreadPolicy(
-          StrictMode.ThreadPolicy.Builder()
-              .detectDiskReads()
-              .detectDiskWrites()
-              .detectNetwork()
-              .penaltyLog()
-              .build()
-      )
-      StrictMode.setVmPolicy(
-          StrictMode.VmPolicy.Builder()
-              .detectLeakedClosableObjects()
-              .detectLeakedClosableObjects()
-              .detectActivityLeaks()
-              .penaltyLog()
-              .penaltyDeath()
-              .build()
-      )
+        val fabric = Fabric.Builder(this)
+                .kits(Crashlytics())
+                .debuggable(true)
+                .build()
+        Fabric.with(fabric)
     }
-  }
+
+    override fun getAppComponent(): ApplicationProvider = appComponent
+
+    private fun strictMode() {
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(
+                    StrictMode.ThreadPolicy.Builder()
+                            .detectDiskReads()
+                            .detectDiskWrites()
+                            .detectNetwork()
+                            .penaltyLog()
+                            .build()
+            )
+            StrictMode.setVmPolicy(
+                    StrictMode.VmPolicy.Builder()
+                            .detectLeakedClosableObjects()
+                            .detectLeakedClosableObjects()
+                            .detectActivityLeaks()
+                            .penaltyLog()
+                            .penaltyDeath()
+                            .build()
+            )
+        }
+    }
 }

@@ -8,20 +8,20 @@ import java.io.IOException
 
 class ApiKeyInterceptor : Interceptor {
 
-  @Throws(IOException::class)
-  override fun intercept(chain: Chain): Response {
-    val originalRequest = chain.request()
-    var request = originalRequest
+    @Throws(IOException::class)
+    override fun intercept(chain: Chain): Response {
+        val originalRequest = chain.request()
+        var request = originalRequest
 
-    val url = request.url()
-        .newBuilder()
-        .addQueryParameter("key", BuildConfig.API_KEY)
-        .build()
+        val url = request.url()
+                .newBuilder()
+                .addQueryParameter("key", BuildConfig.API_KEY)
+                .build()
 
-    request = request.newBuilder()
-        .url(url)
-        .build()
-    return chain.proceed(request)
+        request = request.newBuilder()
+                .url(url)
+                .build()
+        return chain.proceed(request)
 
-  }
+    }
 }

@@ -22,57 +22,57 @@
  * SOFTWARE.
  */
 
-package io.shtanko.other
+package me.shtanko.other
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import io.shtanko.other.di.OthersComponent
 import me.shtanko.common.ui.BaseFragment
 import me.shtanko.core.App
 import me.shtanko.core.Logger
+import me.shtanko.other.di.OthersComponent
 import javax.inject.Inject
 
 class OtherFragment : BaseFragment() {
 
-  @Inject
-  lateinit var logger: Logger
+    @Inject
+    lateinit var logger: Logger
 
-  companion object {
-    val instance = OtherFragment()
-  }
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    val appComponent = (activity?.applicationContext as App).getAppComponent()
-    OthersComponent.Initializer.init(appComponent)
-        .inject(this)
-  }
-
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    return LayoutInflater.from(activity)
-        .inflate(R.layout.fragment_other, container, false)
-  }
-
-  override fun onViewCreated(
-    view: View,
-    savedInstanceState: Bundle?
-  ) {
-    super.onViewCreated(view, savedInstanceState)
-
-    //val rootView = View.inflate(activity, R.layout.fragment_other, null)
-
-    val button = view.findViewById<Button>(R.id.about)
-    button.setOnClickListener {
-      logger.d("About")
+    companion object {
+        val instance = OtherFragment()
     }
-    logger.d(this.javaClass.name, " onViewCreated".toUpperCase(), " view: $view")
-  }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val appComponent = (activity?.applicationContext as App).getAppComponent()
+        OthersComponent.Initializer.init(appComponent)
+                .inject(this)
+    }
+
+    override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
+        return LayoutInflater.from(activity)
+                .inflate(R.layout.fragment_other, container, false)
+    }
+
+    override fun onViewCreated(
+            view: View,
+            savedInstanceState: Bundle?
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+
+        //val rootView = View.inflate(activity, R.layout.fragment_other, null)
+
+        val button = view.findViewById<Button>(R.id.about)
+        button.setOnClickListener {
+            logger.d("About")
+        }
+        logger.d(this.javaClass.name, " onViewCreated".toUpperCase(), " view: $view")
+    }
 
 }

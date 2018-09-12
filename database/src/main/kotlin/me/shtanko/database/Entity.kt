@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package io.shtanko.database
+package me.shtanko.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

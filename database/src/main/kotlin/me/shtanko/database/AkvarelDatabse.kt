@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package io.shtanko.database
+package me.shtanko.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

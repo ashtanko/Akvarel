@@ -24,22 +24,22 @@
 
 package me.shtanko.categories
 
-import io.shtanko.model.Block
+import me.shtanko.model.Block
 import javax.inject.Inject
 import javax.inject.Singleton
 
 interface CategoriesRepository {
-  val categories: List<Block>
+    val categories: List<Block>
 }
 
 @Singleton
 class CategoriesRepositoryImpl @Inject constructor() : CategoriesRepository {
 
-  override val categories by lazy {
-    listOf(
-        Block("Animals"),
-        Block("Colors")
-    )
-  }
+    override val categories by lazy {
+        listOf(
+                Block("Animals"),
+                Block("Colors")
+        )
+    }
 
 }

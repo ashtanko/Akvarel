@@ -24,18 +24,18 @@
 
 package me.shtanko.categories
 
-import io.shtanko.model.Block
+import me.shtanko.model.Block
 import javax.inject.Inject
 
 interface CategoriesUseCase {
-  val categories: List<Block>
+    val categories: List<Block>
 }
 
 class CategoriesUseCaseImpl @Inject constructor(
-  private val categoriesRepository: CategoriesRepository
+        private val categoriesRepository: CategoriesRepository
 ) : CategoriesUseCase {
 
-  override val categories: List<Block>
-    get() = categoriesRepository.categories
+    override val categories: List<Block>
+        get() = categoriesRepository.categories
 
 }

@@ -30,12 +30,7 @@ import dagger.Binds
 import dagger.Component
 import dagger.Module
 import dagger.multibindings.IntoMap
-import me.shtanko.categories.CategoriesFragment
-import me.shtanko.categories.CategoriesRepository
-import me.shtanko.categories.CategoriesRepositoryImpl
-import me.shtanko.categories.CategoriesUseCase
-import me.shtanko.categories.CategoriesUseCaseImpl
-import me.shtanko.categories.CategoriesViewModel
+import me.shtanko.categories.*
 import me.shtanko.common.di.ViewModelKey
 import me.shtanko.common.viewmodel.ViewModelFactory
 import me.shtanko.core.di.ApplicationProvider
@@ -43,38 +38,38 @@ import me.shtanko.core.di.FragmentScope
 
 @Module
 interface CategoriesModule {
-  @Binds
-  @IntoMap
-  @ViewModelKey(CategoriesViewModel::class)
-  abstract fun bindsCategoriesViewModel(viewModel: CategoriesViewModel): ViewModel
+    @Binds
+    @IntoMap
+    @ViewModelKey(CategoriesViewModel::class)
+    abstract fun bindsCategoriesViewModel(viewModel: CategoriesViewModel): ViewModel
 
-  @Binds
-  abstract fun bindsViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+    @Binds
+    abstract fun bindsViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
-  @Binds
-  fun bindsCollectionRepository(impl: CategoriesRepositoryImpl): CategoriesRepository
+    @Binds
+    fun bindsCollectionRepository(impl: CategoriesRepositoryImpl): CategoriesRepository
 
-  @Binds
-  fun bindsCategoriesUseCase(impl: CategoriesUseCaseImpl): CategoriesUseCase
+    @Binds
+    fun bindsCategoriesUseCase(impl: CategoriesUseCaseImpl): CategoriesUseCase
 }
 
 @Component(
-    dependencies = [ApplicationProvider::class],
-    modules = [CategoriesModule::class]
+        dependencies = [ApplicationProvider::class],
+        modules = [CategoriesModule::class]
 )
 @FragmentScope
 interface CategoriesComponent {
-  fun inject(fragment: CategoriesFragment)
+    fun inject(fragment: CategoriesFragment)
 
-  class Initializer private constructor() {
-    companion object {
-      fun init(
-        applicationProvider: ApplicationProvider
-      ): CategoriesComponent {
-        return DaggerCategoriesComponent.builder()
-            .applicationProvider(applicationProvider)
-            .build()
-      }
+    class Initializer private constructor() {
+        companion object {
+            fun init(
+                    applicationProvider: ApplicationProvider
+            ): CategoriesComponent {
+                return DaggerCategoriesComponent.builder()
+                        .applicationProvider(applicationProvider)
+                        .build()
+            }
+        }
     }
-  }
 }

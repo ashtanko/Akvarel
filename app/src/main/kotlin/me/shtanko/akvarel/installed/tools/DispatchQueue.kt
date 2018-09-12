@@ -30,52 +30,52 @@ import android.os.Message
 import java.util.concurrent.CountDownLatch
 
 class DispatchQueue(
-  private val threadName: String
+        private val threadName: String
 ) : Thread() {
 
-  private val syncLatch = CountDownLatch(1)
-  var handler: Handler? = null
+    private val syncLatch = CountDownLatch(1)
+    var handler: Handler? = null
 
-  init {
-    name = threadName
-    start()
-  }
-
-  fun postRunnable(
-    runnable: Runnable,
-    delay: Long = 0
-  ) {
-    try {
-      syncLatch.await()
-      if (delay <= 0) {
-        handler?.post(runnable)
-      } else {
-        handler?.postDelayed(runnable, delay)
-      }
-    } catch (ex: Exception) {
-      //Ours.error(ex)
+    init {
+        name = threadName
+        start()
     }
-  }
 
-  fun cleanUp() {
-    try {
-      syncLatch.await()
-      handler?.removeCallbacksAndMessages(null)
-    } catch (ex: Exception) {
-      //Ours.error(ex)
+    fun postRunnable(
+            runnable: Runnable,
+            delay: Long = 0
+    ) {
+        try {
+            syncLatch.await()
+            if (delay <= 0) {
+                handler?.post(runnable)
+            } else {
+                handler?.postDelayed(runnable, delay)
+            }
+        } catch (ex: Exception) {
+            // Ours.error(ex)
+        }
     }
-  }
 
-  override fun run() {
-    Looper.prepare()
-    handler = MessageHandler()
-    syncLatch.countDown()
-    Looper.loop()
-  }
-
-  class MessageHandler : Handler() {
-    override fun handleMessage(msg: Message?) {
-      // DispatchQueue
+    fun cleanUp() {
+        try {
+            syncLatch.await()
+            handler?.removeCallbacksAndMessages(null)
+        } catch (ex: Exception) {
+            // Ours.error(ex)
+        }
     }
-  }
+
+    override fun run() {
+        Looper.prepare()
+        handler = MessageHandler()
+        syncLatch.countDown()
+        Looper.loop()
+    }
+
+    class MessageHandler : Handler() {
+        override fun handleMessage(msg: Message?) {
+            // DispatchQueue
+        }
+    }
 }

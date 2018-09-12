@@ -25,5 +25,5 @@
 package me.shtanko.core.collection
 
 interface CollectionRepository {
-  fun getCollection()
+    fun getCollection()
 }

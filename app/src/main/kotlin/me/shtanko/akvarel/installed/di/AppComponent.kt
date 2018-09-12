@@ -10,28 +10,28 @@ import me.shtanko.core.di.ToolsProvider
 
 @ActivityScope
 @Component(
-    dependencies = [ToolsProvider::class, CollectionProvider::class],
-    modules = [BindingsModule::class]
+        dependencies = [ToolsProvider::class, CollectionProvider::class],
+        modules = [BindingsModule::class]
 )
 interface AppComponent : ApplicationProvider {
 
-  fun inject(app: Akvarel)
+    fun inject(app: Akvarel)
 
-  class Initializer private constructor() {
-    companion object {
-      fun init(app: Akvarel): AppComponent {
+    class Initializer private constructor() {
+        companion object {
+            fun init(app: Akvarel): AppComponent {
 
-        val toolsProvider: ToolsProvider = ToolsComponent.Initializer.init(app)
+                val toolsProvider: ToolsProvider = ToolsComponent.Initializer.init(app)
 
-        val collectionProvider = CollectionRepoComponent.Initializer.init(toolsProvider)
+                val collectionProvider = CollectionRepoComponent.Initializer.init(toolsProvider)
 
-        return DaggerAppComponent.builder()
-            .collectionProvider(collectionProvider)
-            .toolsProvider(toolsProvider)
-            .build()
-      }
+                return DaggerAppComponent.builder()
+                        .collectionProvider(collectionProvider)
+                        .toolsProvider(toolsProvider)
+                        .build()
+            }
+        }
     }
-  }
 
 }
 

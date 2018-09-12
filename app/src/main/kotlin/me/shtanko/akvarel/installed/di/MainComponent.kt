@@ -32,18 +32,18 @@ import me.shtanko.core.di.ApplicationProvider
 
 @ActivityScope
 @Component(
-    dependencies = [ApplicationProvider::class],
-    modules = [MainModule::class]
+        dependencies = [ApplicationProvider::class],
+        modules = [MainModule::class]
 )
 interface MainComponent {
-  fun inject(activity: MainActivity)
+    fun inject(activity: MainActivity)
 
-  class Initializer private constructor() {
-    companion object {
-      fun init(applicationProvider: ApplicationProvider): MainComponent =
-        DaggerMainComponent.builder().applicationProvider(applicationProvider).build()
+    class Initializer private constructor() {
+        companion object {
+            fun init(applicationProvider: ApplicationProvider): MainComponent =
+                    DaggerMainComponent.builder().applicationProvider(applicationProvider).build()
+        }
     }
-  }
 
 }
 

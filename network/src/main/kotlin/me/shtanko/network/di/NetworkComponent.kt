@@ -23,81 +23,81 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 interface NetworkProvider {
-  fun provideNetworkClient(): NetworkClient
+    fun provideNetworkClient(): NetworkClient
 }
 
 @Module
 interface NetworkModule {
-  @Binds
-  fun bindsNetworkClient(impl: NetworkClientImpl): NetworkClient
+    @Binds
+    fun bindsNetworkClient(impl: NetworkClientImpl): NetworkClient
 }
 
 @Module
 object RestModule {
 
-  @Provides
-  @JvmStatic
-  @Singleton
-  fun provideGson(): Gson = GsonBuilder()
-      .setPrettyPrinting()
-      .setDateFormat(GSON_DATE_FORMAT)
-      .create()
+    @Provides
+    @JvmStatic
+    @Singleton
+    fun provideGson(): Gson = GsonBuilder()
+            .setPrettyPrinting()
+            .setDateFormat(GSON_DATE_FORMAT)
+            .create()
 
-  @Provides
-  @JvmStatic
-  @Singleton
-  fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor()
-      .setLevel(Level.BODY)
+    @Provides
+    @JvmStatic
+    @Singleton
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor()
+            .setLevel(Level.BODY)
 
-  @Provides
-  @JvmStatic
-  @Singleton
-  fun provideKeyInterceptor(): ApiKeyInterceptor = ApiKeyInterceptor()
+    @Provides
+    @JvmStatic
+    @Singleton
+    fun provideKeyInterceptor(): ApiKeyInterceptor = ApiKeyInterceptor()
 
-  @Provides
-  @JvmStatic
-  @Singleton
-  fun provideOkHttpClient(
-    loggingInterceptor: HttpLoggingInterceptor,
-    keyInterceptor: ApiKeyInterceptor
-  ): OkHttpClient =
-    OkHttpClient().newBuilder()
-        .addNetworkInterceptor(loggingInterceptor)
-        .addNetworkInterceptor(keyInterceptor)
-        .build()
+    @Provides
+    @JvmStatic
+    @Singleton
+    fun provideOkHttpClient(
+            loggingInterceptor: HttpLoggingInterceptor,
+            keyInterceptor: ApiKeyInterceptor
+    ): OkHttpClient =
+            OkHttpClient().newBuilder()
+                    .addNetworkInterceptor(loggingInterceptor)
+                    .addNetworkInterceptor(keyInterceptor)
+                    .build()
 
-  @Provides
-  @JvmStatic
-  @Singleton
-  fun provideConvertersFactory(gson: Gson): Converter.Factory =
-    GsonConverterFactory.create(gson)
+    @Provides
+    @JvmStatic
+    @Singleton
+    fun provideConvertersFactory(gson: Gson): Converter.Factory =
+            GsonConverterFactory.create(gson)
 
-  @Provides
-  @JvmStatic
-  @Singleton
-  fun provideRetrofitBuilder(
-    client: OkHttpClient,
-    converterFactory: Converter.Factory
-  ): Retrofit.Builder = Retrofit.Builder()
-      .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-      .addConverterFactory(converterFactory)
-      .client(client)
+    @Provides
+    @JvmStatic
+    @Singleton
+    fun provideRetrofitBuilder(
+            client: OkHttpClient,
+            converterFactory: Converter.Factory
+    ): Retrofit.Builder = Retrofit.Builder()
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(converterFactory)
+            .client(client)
 
-  @Provides
-  @JvmStatic
-  @Singleton
-  fun provideApiService(builder: Retrofit.Builder): PixabayService = builder
-      .baseUrl(BuildConfig.ENDPOINT)
-      .build()
-      .create(PixabayService::class.java)
+    @Provides
+    @JvmStatic
+    @Singleton
+    fun provideApiService(builder: Retrofit.Builder): PixabayService = builder
+            .baseUrl(BuildConfig.ENDPOINT)
+            .build()
+            .create(PixabayService::class.java)
 
 }
 
 @Singleton
 @Component(
-    dependencies = [
-      ToolsProvider::class],
-    modules = [NetworkModule::class, RestModule::class]
+        dependencies = [
+            ToolsProvider::class],
+        modules = [NetworkModule::class, RestModule::class]
 )
 interface NetworkComponent : NetworkProvider {
 

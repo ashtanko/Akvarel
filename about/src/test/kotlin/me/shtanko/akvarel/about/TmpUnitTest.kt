@@ -11,8 +11,8 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class TmpUnitTest {
 
-  @Test
-  fun `about module tmp additional test`() {
-    Assert.assertEquals(4, 2 + 2)
-  }
+    @Test
+    fun `about module tmp additional test`() {
+        Assert.assertEquals(4, 2 + 2)
+    }
 }

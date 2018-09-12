@@ -22,32 +22,32 @@
  * SOFTWARE.
  */
 
-package io.shtanko.other.di
+package me.shtanko.other.di
 
 import dagger.Component
 import dagger.Module
-import io.shtanko.other.OtherFragment
 import me.shtanko.core.di.ApplicationProvider
 import me.shtanko.core.di.FragmentScope
+import me.shtanko.other.OtherFragment
 
 @Module
 class OthersModule
 
 @Component(
-    dependencies = [ApplicationProvider::class],
-    modules = [OthersModule::class]
+        dependencies = [ApplicationProvider::class],
+        modules = [OthersModule::class]
 )
 @FragmentScope
 interface OthersComponent {
-  fun inject(fragment: OtherFragment)
+    fun inject(fragment: OtherFragment)
 
-  class Initializer private constructor() {
-    companion object {
-      fun init(applicationProvider: ApplicationProvider): OthersComponent {
-        return DaggerOthersComponent.builder()
-            .applicationProvider(applicationProvider)
-            .build()
-      }
+    class Initializer private constructor() {
+        companion object {
+            fun init(applicationProvider: ApplicationProvider): OthersComponent {
+                return DaggerOthersComponent.builder()
+                        .applicationProvider(applicationProvider)
+                        .build()
+            }
+        }
     }
-  }
 }

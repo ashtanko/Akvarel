@@ -29,18 +29,18 @@ import androidx.lifecycle.ViewModel
 import javax.inject.Inject
 
 class CollectionViewModel @Inject constructor(
-    private val collectionUseCase: CollectionUseCase
+        private val collectionUseCase: CollectionUseCase
 ) : ViewModel() {
 
-  var data: MutableLiveData<CollectionViewModel.Command> = MutableLiveData()
+    var data: MutableLiveData<CollectionViewModel.Command> = MutableLiveData()
 
-  sealed class Command {
-    object Run : Command()
-  }
+    sealed class Command {
+        object Run : Command()
+    }
 
-  init {
-    data.value = Command.Run
-    //collectionUseCase.loadCollection()
-  }
+    init {
+        data.value = Command.Run
+        //collectionUseCase.loadCollection()
+    }
 
 }

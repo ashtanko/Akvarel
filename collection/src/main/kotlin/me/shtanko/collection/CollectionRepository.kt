@@ -24,6 +24,7 @@
 
 package me.shtanko.collection
 
+import android.annotation.SuppressLint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import me.shtanko.core.Logger
@@ -32,21 +33,24 @@ import me.shtanko.network.NetworkClient
 import javax.inject.Inject
 
 class CollectionRepositoryImpl @Inject constructor(
-  val client: NetworkClient,
-  val logger: Logger
+        val client: NetworkClient,
+        val logger: Logger
 ) : CollectionRepository {
-  override fun getCollection() {
 
-    logger.d("LOL KEK OLOLOL")
+    //todo lint
+    @SuppressLint("CheckResult")
+    override fun getCollection() {
 
-    client.get()
-        .subscribeOn(Schedulers.computation())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe { t1, t2 ->
-          logger.d(t1, t2)
-        }
+        logger.d("LOL KEK OLOLOL")
 
-  }
+        client.get()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { t1, t2 ->
+                    logger.d(t1, t2)
+                }
+
+    }
 
 }
 

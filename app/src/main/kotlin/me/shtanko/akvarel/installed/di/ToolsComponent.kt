@@ -2,11 +2,7 @@ package me.shtanko.akvarel.installed.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import dagger.Binds
-import dagger.BindsInstance
-import dagger.Component
-import dagger.Module
-import dagger.Provides
+import dagger.*
 import dagger.multibindings.IntoMap
 import me.shtanko.akvarel.installed.tools.Ours
 import me.shtanko.common.di.ViewModelKey
@@ -20,14 +16,14 @@ import javax.inject.Singleton
 @Module
 class ToolsModule {
 
-  @Module
-  companion object {
+    @Module
+    companion object {
 
-    @JvmStatic
-    @Provides
-    @Singleton
-    fun provideLogger(app: App): Logger {
-      val instance = Ours
+        @JvmStatic
+        @Provides
+        @Singleton
+        fun provideLogger(app: App): Logger {
+            val instance = Ours
 //      val context = app.getApplicationContext()
 //
 //      var dir = context.getExternalFilesDir(null)
@@ -36,9 +32,9 @@ class ToolsModule {
 //      }
 //      val path = dir?.absolutePath
 //      instance.logPath = path
-      return instance
+            return instance
+        }
     }
-  }
 
 }
 
@@ -49,32 +45,32 @@ class MainViewModel @Inject constructor() : ViewModel() {
 @Module
 abstract class ViewModelModule {
 
-  @Binds
-  @IntoMap
-  @ViewModelKey(MainViewModel::class)
-  abstract fun bindsMainViewModel(viewModel: MainViewModel): ViewModel
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainViewModel::class)
+    abstract fun bindsMainViewModel(viewModel: MainViewModel): ViewModel
 
-  @Binds
-  abstract fun bindsViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+    @Binds
+    abstract fun bindsViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 }
 
 @Singleton
 @Component(modules = [ToolsModule::class, ViewModelModule::class])
 interface ToolsComponent : ToolsProvider {
 
-  @Component.Builder
-  interface Builder {
-    fun build(): ToolsComponent
-    @BindsInstance
-    fun app(app: App): Builder
-  }
-
-  class Initializer private constructor() {
-    companion object {
-      fun init(app: App): ToolsProvider = DaggerToolsComponent.builder()
-          .app(app)
-          .build()
+    @Component.Builder
+    interface Builder {
+        fun build(): ToolsComponent
+        @BindsInstance
+        fun app(app: App): Builder
     }
-  }
+
+    class Initializer private constructor() {
+        companion object {
+            fun init(app: App): ToolsProvider = DaggerToolsComponent.builder()
+                    .app(app)
+                    .build()
+        }
+    }
 
 }

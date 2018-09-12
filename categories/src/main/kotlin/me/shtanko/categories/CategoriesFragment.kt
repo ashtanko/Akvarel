@@ -36,25 +36,25 @@ import javax.inject.Inject
 
 class CategoriesFragment : BaseFragment() {
 
-  @Inject
-  lateinit var logger: Logger
+    @Inject
+    lateinit var logger: Logger
 
-  companion object {
-    val instance = CategoriesFragment()
-  }
+    companion object {
+        val instance = CategoriesFragment()
+    }
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    CategoriesComponent.Initializer.init((activity?.applicationContext as App).getAppComponent())
-        .inject(this@CategoriesFragment)
-  }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        CategoriesComponent.Initializer.init((activity?.applicationContext as App).getAppComponent())
+                .inject(this@CategoriesFragment)
+    }
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    return LayoutInflater.from(activity)
-        .inflate(R.layout.fragment_categories, container, false)
-  }
+    override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
+        return LayoutInflater.from(activity)
+                .inflate(R.layout.fragment_categories, container, false)
+    }
 }

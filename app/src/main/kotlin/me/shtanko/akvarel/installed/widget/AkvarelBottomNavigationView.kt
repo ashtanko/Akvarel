@@ -29,11 +29,10 @@ import android.util.AttributeSet
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AkvarelBottomNavigationView @JvmOverloads constructor(
-  context: Context,
-  attrs: AttributeSet? = null,
-  defStyle: Int = 0
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyle: Int = 0
 ) : BottomNavigationView(context, attrs, defStyle) {
-
 
 
 }
