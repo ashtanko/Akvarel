@@ -23,16 +23,7 @@ class ToolsModule {
         @Provides
         @Singleton
         fun provideLogger(app: App): Logger {
-            val instance = Ours
-//      val context = app.getApplicationContext()
-//
-//      var dir = context.getExternalFilesDir(null)
-//      if (dir == null) {
-//        dir = context.cacheDir
-//      }
-//      val path = dir?.absolutePath
-//      instance.logPath = path
-            return instance
+            return Ours(app.getApplicationContext())
         }
     }
 

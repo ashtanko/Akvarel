@@ -1,5 +1,6 @@
 package me.shtanko.akvarel.installed.tools
 
+import android.content.Context
 import android.os.Build
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
@@ -12,43 +13,54 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import javax.inject.Inject
 import kotlin.collections.HashMap
 
-object Ours : Logger {
-    private const val TAG: String = "AKVAREL"
-    private const val SYSTEM_DUMP_FILE_NAME: String = "sys-info"
-    private const val SYSTEM_DUMP_FILE_EXTENSION: String = ".log"
-    private const val SYSTEM_DUMP_FULL_FILE_NAME: String =
-            "$SYSTEM_DUMP_FILE_NAME$SYSTEM_DUMP_FILE_EXTENSION"
-    private const val LOG_FILE_NAME: String = "log"
-    private const val OLD_LOG_FILE_SUFFIX: String = ".old"
-    private const val LOG_FILE_EXTENSION = ".log"
-    private const val LOGS_DIR_NAME = "logs"
-    private const val LOG_FULL_FILE_NAME = "$LOG_FILE_NAME$LOG_FILE_EXTENSION"
-    private const val OLD_LOG_FULL_FILE_NAME = "$LOG_FILE_NAME$OLD_LOG_FILE_SUFFIX$LOG_FILE_EXTENSION"
-    private const val BYTE = 1024
-    private const val KB = 1024 * BYTE
-    private const val MB = 1024 * KB
-    private const val LOG_FILE_MAX_SIZE = 1 * BYTE // 1 kb
-    private const val LOG_FILE_SIZE_LIMIT = MB // 1 mb
-    private const val MAX_LOG_FILES = 5
-    private val filesTable = HashMap<String, File>()
+class Ours @Inject constructor(
+        private val context: Context
+) : Logger {
 
-    var logPath: String? = ""
-    private val logQueue = DispatchQueue("Log-Queue")
+    private var androidExternalFilesDir = (context.applicationContext.getExternalFilesDir(null)
+            ?: context.applicationContext.cacheDir)
+
+    private var logPath: String = androidExternalFilesDir.absolutePath
+
+    companion object {
+        private const val TAG: String = "AKVAREL"
+        private const val SYSTEM_DUMP_FILE_NAME: String = "sys-info"
+        private const val SYSTEM_DUMP_FILE_EXTENSION: String = ".log"
+        private const val SYSTEM_DUMP_FULL_FILE_NAME: String =
+                "$SYSTEM_DUMP_FILE_NAME$SYSTEM_DUMP_FILE_EXTENSION"
+        private const val LOG_FILE_NAME: String = "log"
+        private const val OLD_LOG_FILE_SUFFIX: String = ".old"
+        private const val LOG_FILE_EXTENSION = ".log"
+        private const val LOGS_DIR_NAME = "logs"
+        private const val LOG_FULL_FILE_NAME = "$LOG_FILE_NAME$LOG_FILE_EXTENSION"
+        private const val OLD_LOG_FULL_FILE_NAME = "$LOG_FILE_NAME$OLD_LOG_FILE_SUFFIX$LOG_FILE_EXTENSION"
+        private const val BYTE = 1024
+        private const val KB = 1024 * BYTE
+        private const val MB = 1024 * KB
+        private const val LOG_FILE_MAX_SIZE = 1 * BYTE // 1 kb
+        private const val LOG_FILE_SIZE_LIMIT = MB // 1 mb
+        private const val MAX_LOG_FILES = 5
+        private val filesTable = HashMap<String, File>()
+        private val logQueue = DispatchQueue("Log-Queue")
+    }
+
+    init {
+        startPoint()
+    }
 
     private val checkpoint = "====== START_POINT ${date()} ======"
     private val deathpoint = "====== DEATH_POINT ${date()} ======"
+
 
     private fun date(): String {
         val datePattern = "EEE, d MMM yyyy HH:mm:ss Z"
         val dateTime = System.currentTimeMillis()
         val timeFormat = SimpleDateFormat(datePattern, Locale.ENGLISH)
         val date = Date(dateTime)
-        val dateString = timeFormat.format(date)
-        val stringBuilder = StringBuilder()
-        stringBuilder.append(dateString)
-        return stringBuilder.toString()
+        return timeFormat.format(date)
     }
 
     override fun startPoint() {
@@ -60,8 +72,7 @@ object Ours : Logger {
                     ex.printStackTrace()
                 }
             })
-        } catch (ex: Exception) {
-            //Ours.error(ex)
+        } catch (ignored: Exception) {
         }
     }
 
@@ -74,8 +85,7 @@ object Ours : Logger {
                     ex.printStackTrace()
                 }
             })
-        } catch (ex: Exception) {
-            //Ours.error(ex)
+        } catch (ignored: Exception) {
         }
     }
 
@@ -90,14 +100,18 @@ object Ours : Logger {
     private fun writeLogOrCreateNew(value: String) {
         val path = "$logPath/$LOGS_DIR_NAME/$LOG_FULL_FILE_NAME"
         val dirPath = "$logPath/$LOGS_DIR_NAME"
-        val dir = File(dirPath)
-        dir.mkdirs()
-        val log = File(path)
-        if (log.exists()) {
-            calculateFiles(value, log)
-        } else {
-            log.createNewFile()
-            writeStringToFile(value, log)
+        try {
+            val dir = File(dirPath)
+            dir.mkdirs()
+            val log = File(path)
+            if (log.exists()) {
+                calculateFiles(value, log)
+            } else {
+                log.createNewFile()
+                writeStringToFile(value, log)
+            }
+        } catch (ex: IOException) {
+            ex.printStackTrace()
         }
     }
 
@@ -127,9 +141,15 @@ object Ours : Logger {
         try {
             bufferedWriter.write(value)
             bufferedWriter.newLine()
-            bufferedWriter.flush()
+
         } catch (ex: IOException) {
             ex.printStackTrace()
+        } finally {
+            try {
+                bufferedWriter.flush()
+                bufferedWriter.close()
+            } catch (ignored: Exception) {
+            }
         }
     }
 
@@ -177,26 +197,20 @@ object Ours : Logger {
     }
 
     private fun dump(): String {
-        val stringBuilder = StringBuilder()
+        val sb = StringBuilder()
         val date = date()
         val cpu = cpu()
         val info = info()
-        stringBuilder.append("DATE:")
-                .append("\n")
-        stringBuilder.append(date)
-                .append("\n")
-        stringBuilder.append("INFO:")
-                .append("\n")
-        stringBuilder.append(info)
-                .append("\n")
-        stringBuilder.append("CPU:")
-                .append("\n")
-        stringBuilder.append(cpu)
-                .append("\n")
-        stringBuilder.append("OTHER:")
-                .append("\n")
-        stringBuilder.append("log file path: $logPath/$SYSTEM_DUMP_FULL_FILE_NAME")
-        return stringBuilder.toString()
+        sb.append("DATE: $date")
+        sb.append("\n")
+        sb.append("INFO: $info")
+        sb.append("\n")
+        sb.append("CPU: $cpu")
+        sb.append("\n")
+        sb.append("OTHER:")
+        sb.append("\n")
+        sb.append("log file path: $logPath/$SYSTEM_DUMP_FULL_FILE_NAME")
+        return sb.toString()
     }
 
     fun meminfo() {
@@ -222,25 +236,25 @@ object Ours : Logger {
             "VERSION.SDK_INT < LOLLIPOP"
         }
 
-        val stringBuilder = StringBuilder()
-        stringBuilder.append("User device time: $userDeviceTime")
-                .append("\n")
-        stringBuilder.append("brand: $brand")
-                .append("\n")
-        stringBuilder.append("device: $device")
-                .append("\n")
-        stringBuilder.append("hardware: $hardware")
-                .append("\n")
-        stringBuilder.append("model: $model")
-                .append("\n")
-        stringBuilder.append("user: $user")
-                .append("\n")
-        stringBuilder.append("version: $version")
-                .append("\n")
-        stringBuilder.append("os: $os")
-                .append("\n")
-        stringBuilder.append("rooted: $isRooted")
-        return stringBuilder.toString()
+        val sb = StringBuilder()
+        sb.append("User device time: $userDeviceTime")
+        sb.append("\n")
+        sb.append("brand: $brand")
+        sb.append("\n")
+        sb.append("device: $device")
+        sb.append("\n")
+        sb.append("hardware: $hardware")
+        sb.append("\n")
+        sb.append("model: $model")
+        sb.append("\n")
+        sb.append("user: $user")
+        sb.append("\n")
+        sb.append("version: $version")
+        sb.append("\n")
+        sb.append("os: $os")
+        sb.append("\n")
+        sb.append("rooted: $isRooted")
+        return sb.toString()
     }
 
     private fun isRooted(): Boolean {
@@ -248,7 +262,6 @@ object Ours : Logger {
         if (buildTags != null && buildTags.contains("test-keys")) {
             return true
         }
-
         try {
             val path = "/system/app/Superuser.apk"
             val file = File(path)
