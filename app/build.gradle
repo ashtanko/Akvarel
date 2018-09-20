@@ -37,6 +37,7 @@ android {
   compileSdkVersion ext.compileSdkVersion
 
   defaultConfig {
+    applicationId "me.shtanko.akvarel"
     minSdkVersion ext.minSdkVersion
     targetSdkVersion ext.targetSdkVersion
     versionCode ext.commitsCount

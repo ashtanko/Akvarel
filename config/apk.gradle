@@ -1,17 +1,19 @@
 static def releaseTime() {
-  return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+    return new Date().format("yyyy_MM_dd", TimeZone.getTimeZone("UTC"))
 }
 
 android {
-
-  android.applicationVariants.all { variant ->
-    variant.outputs.all { output ->
-      def outputFile = output.outputFile
-      if (outputFile != null && outputFile.name.endsWith('.apk')) {
-        def fileName = outputFile.name.replace("app",
-            "${defaultConfig.applicationId}_${defaultConfig.versionName}_${releaseTime()}")
-        outputFileName = fileName
-      }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def apkNickname = "Akvarel"
+                def apkSuffix = "app"
+                def apkPath = "../../../../../apkfiles/${buildType.name}"
+                def newName = "${apkNickname}${apkSuffix}_v.${defaultConfig.versionName}_${defaultConfig.versionCode}_${buildType.name}_${releaseTime()}"
+                def fileName = outputFile.name.replace("app-${buildType.name}", "$apkPath/$newName")
+                outputFileName = fileName
+            }
+        }
     }
-  }
 }
