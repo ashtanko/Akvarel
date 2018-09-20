@@ -1,10 +1,10 @@
-package me.shtanko.akvarel.installed.di
+package me.shtanko.akvarel.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.*
 import dagger.multibindings.IntoMap
-import me.shtanko.akvarel.installed.tools.Ours
+import me.shtanko.akvarel.tools.Ours
 import me.shtanko.common.di.ViewModelKey
 import me.shtanko.common.viewmodel.ViewModelFactory
 import me.shtanko.core.App

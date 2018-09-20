@@ -1,7 +1,7 @@
-package me.shtanko.akvarel.installed.di
+package me.shtanko.akvarel.di
 
 import dagger.Component
-import me.shtanko.akvarel.installed.Akvarel
+import me.shtanko.akvarel.Akvarel
 import me.shtanko.collection.di.CollectionRepoComponent
 import me.shtanko.core.di.ActivityScope
 import me.shtanko.core.di.ApplicationProvider

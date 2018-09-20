@@ -1,17 +1,39 @@
-package me.shtanko.akvarel.installed
+/*
+ * MIT License
+ *
+ * Copyright (c) 2018 Alexey Shtanko
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+package me.shtanko.akvarel
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import me.shtanko.akvarel.R
-import me.shtanko.akvarel.installed.di.MainComponent
-import me.shtanko.akvarel.installed.widget.AkvarelBottomNavigationView
+import me.shtanko.akvarel.widget.AkvarelBottomNavigationView
 import me.shtanko.categories.CategoriesFragment
 import me.shtanko.collection.CollectionFragment
 import me.shtanko.common.ui.BaseFragment
-import me.shtanko.core.App
 import me.shtanko.core.Logger
 import me.shtanko.other.OtherFragment
 import javax.inject.Inject
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,6 +44,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         inject()
         setContentView(R.layout.activity_main)
+
+        logger.d(this, "onCreate")
 
         val collection = CollectionFragment.instance
         val categories = CategoriesFragment.instance
@@ -59,10 +83,5 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .commit()
-    }
-
-    private fun inject() {
-        MainComponent.Initializer.init((applicationContext as App).getAppComponent())
-                .inject(this@MainActivity)
     }
 }

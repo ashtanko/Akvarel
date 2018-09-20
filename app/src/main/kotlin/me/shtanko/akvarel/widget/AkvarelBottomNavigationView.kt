@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package me.shtanko.akvarel.installed.widget
+package me.shtanko.akvarel.widget
 
 import android.content.Context
 import android.util.AttributeSet

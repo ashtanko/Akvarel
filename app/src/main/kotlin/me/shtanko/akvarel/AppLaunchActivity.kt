@@ -1,4 +1,4 @@
-package me.shtanko.akvarel.installed
+package me.shtanko.akvarel
 
 import android.app.Activity
 import android.os.Bundle

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package me.shtanko.akvarel.installed.tools
+package me.shtanko.akvarel.tools
 
 import android.os.Handler
 import android.os.Looper
@@ -62,7 +62,6 @@ class DispatchQueue(
             syncLatch.await()
             handler?.removeCallbacksAndMessages(null)
         } catch (ex: Exception) {
-            // Ours.error(ex)
         }
     }
 

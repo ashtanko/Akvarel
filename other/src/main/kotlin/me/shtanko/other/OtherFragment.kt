@@ -24,11 +24,14 @@
 
 package me.shtanko.other
 
+import android.app.ActivityOptions
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import me.shtanko.common.extensions.About
+import me.shtanko.common.extensions.intentTo
 import me.shtanko.common.ui.BaseFragment
 import me.shtanko.core.App
 import me.shtanko.core.Logger
@@ -66,11 +69,10 @@ class OtherFragment : BaseFragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        //val rootView = View.inflate(activity, R.layout.fragment_other, null)
-
         val button = view.findViewById<Button>(R.id.about)
         button.setOnClickListener {
-            logger.d("About")
+            val intent = intentTo(About)
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
         }
         logger.d(this.javaClass.name, " onViewCreated".toUpperCase(), " view: $view")
     }

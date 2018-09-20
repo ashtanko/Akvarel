@@ -22,30 +22,9 @@
  * SOFTWARE.
  */
 
-package me.shtanko.akvarel.di
+package me.shtanko.akvarel.about.di
 
-import dagger.Component
-import dagger.Module
-import me.shtanko.akvarel.MainActivity
-import me.shtanko.core.di.ActivityScope
-import me.shtanko.core.di.ApplicationProvider
+import me.shtanko.akvarel.about.AboutActivity
 
-@ActivityScope
-@Component(
-        dependencies = [ApplicationProvider::class],
-        modules = [MainModule::class]
-)
-interface MainComponent {
-    fun inject(activity: MainActivity)
-
-    class Initializer private constructor() {
-        companion object {
-            fun init(applicationProvider: ApplicationProvider): MainComponent =
-                    DaggerMainComponent.builder().applicationProvider(applicationProvider).build()
-        }
-    }
-
+fun AboutActivity.inject() {
 }
-
-@Module
-interface MainModule
