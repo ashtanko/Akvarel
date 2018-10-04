@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.*
 import dagger.multibindings.IntoMap
-import me.shtanko.akvarel.tools.Ours
+import me.shtanko.akvarel.tools.LoggerImpl
 import me.shtanko.common.di.ViewModelKey
 import me.shtanko.common.viewmodel.ViewModelFactory
 import me.shtanko.core.App
@@ -22,8 +22,8 @@ class ToolsModule {
         @JvmStatic
         @Provides
         @Singleton
-        fun provideLogger(app: App): Logger {
-            return Ours(app.getApplicationContext())
+        fun provideLogger(): Logger {
+            return LoggerImpl()
         }
     }
 

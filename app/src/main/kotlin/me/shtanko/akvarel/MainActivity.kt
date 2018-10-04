@@ -42,10 +42,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        inject()
+        provideInjection()
         setContentView(R.layout.activity_main)
-
-        logger.d(this, "onCreate")
 
         val collection = CollectionFragment.instance
         val categories = CategoriesFragment.instance

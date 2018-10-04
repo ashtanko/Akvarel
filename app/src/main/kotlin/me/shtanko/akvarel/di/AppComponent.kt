@@ -2,15 +2,15 @@ package me.shtanko.akvarel.di
 
 import dagger.Component
 import me.shtanko.akvarel.Akvarel
-import me.shtanko.collection.di.CollectionRepoComponent
+import me.shtanko.collection.di.RepositoryRepoComponent
 import me.shtanko.core.di.ActivityScope
 import me.shtanko.core.di.ApplicationProvider
-import me.shtanko.core.di.CollectionProvider
+import me.shtanko.core.di.RepositoryProvider
 import me.shtanko.core.di.ToolsProvider
 
 @ActivityScope
 @Component(
-        dependencies = [ToolsProvider::class, CollectionProvider::class],
+        dependencies = [ToolsProvider::class, RepositoryProvider::class],
         modules = [BindingsModule::class]
 )
 interface AppComponent : ApplicationProvider {
@@ -23,7 +23,7 @@ interface AppComponent : ApplicationProvider {
 
                 val toolsProvider: ToolsProvider = ToolsComponent.Initializer.init(app)
 
-                val collectionProvider = CollectionRepoComponent.Initializer.init(toolsProvider)
+                val collectionProvider = RepositoryRepoComponent.Initializer.init(toolsProvider)
 
                 return DaggerAppComponent.builder()
                         .collectionProvider(collectionProvider)

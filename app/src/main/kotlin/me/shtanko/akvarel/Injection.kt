@@ -25,11 +25,9 @@
 package me.shtanko.akvarel
 
 import me.shtanko.akvarel.di.MainComponent
-import me.shtanko.core.App
+import me.shtanko.core.appComponent
 
-fun MainActivity.inject() {
-    val app = applicationContext as App
-    val appComponent = app.getAppComponent()
+fun MainActivity.provideInjection() {
     MainComponent.Initializer
             .init(appComponent)
             .inject(this)

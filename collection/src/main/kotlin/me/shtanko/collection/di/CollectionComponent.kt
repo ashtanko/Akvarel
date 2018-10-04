@@ -35,7 +35,7 @@ import me.shtanko.common.di.ViewModelKey
 import me.shtanko.common.viewmodel.ViewModelFactory
 import me.shtanko.core.collection.CollectionRepository
 import me.shtanko.core.di.ApplicationProvider
-import me.shtanko.core.di.CollectionProvider
+import me.shtanko.core.di.RepositoryProvider
 import me.shtanko.core.di.FragmentScope
 import me.shtanko.core.di.ToolsProvider
 import me.shtanko.network.di.DaggerNetworkComponent
@@ -69,17 +69,17 @@ interface CollectionRepoModule {
         dependencies = [ToolsProvider::class, NetworkProvider::class],
         modules = [CollectionRepoModule::class]
 )
-interface CollectionRepoComponent : CollectionProvider {
+interface RepositoryRepoComponent : RepositoryProvider {
 
     class Initializer private constructor() {
         companion object {
-            fun init(toolsProvider: ToolsProvider): CollectionProvider {
+            fun init(toolsProvider: ToolsProvider): RepositoryProvider {
 
                 val networkProvider = DaggerNetworkComponent.builder()
                         .toolsProvider(toolsProvider)
                         .build()
 
-                return DaggerCollectionRepoComponent.builder()
+                return DaggerRepositoryRepoComponent.builder()
                         .toolsProvider(toolsProvider)
                         .networkProvider(networkProvider)
                         .build()

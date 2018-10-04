@@ -24,16 +24,45 @@
 
 package me.shtanko.model
 
+import com.github.kittinunf.fuel.core.ResponseDeserializable
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
+import com.google.gson.reflect.TypeToken
+import java.io.Reader
 
 data class Hit(
         @SerializedName("totalHits") val totalHits: Int = 0,
-        @SerializedName("hits") val hits: List<HitsItem>?,
+        @SerializedName("hits") val hits: List<HitsItem>,
         @SerializedName("total") val total: Int = 0
-)
+) {
+    fun asJson() = {
+
+        val listOfTestObject = object : TypeToken<List<HitsItem>>() {
+
+        }.type
+        Gson().toJson(this, listOfTestObject)
+
+        /*
+        Type listOfTestObject = new TypeToken<List<TestObject>>(){}.getType();
+        String s = gson.toJson(list, listOfTestObject);
+        List<TestObject> list2 = gson.fromJson(s, listOfTestObject);
+         */
+
+        //Gson().toJson(this)
+
+
+    }
+
+    object Deserializer : ResponseDeserializable<Hit> {
+        override fun deserialize(reader: Reader): Hit? {
+            println("FUEL_LOL Deserializer: $reader")
+            return Gson().fromJson(reader, Hit::class.java)
+        }
+    }
+}
 
 data class HitsItem(
-        @SerializedName("largeImageURL") val largeImageURL: String = "",
+        @SerializedName("largeImageURL") val largeImageURL: String,
         @SerializedName("webformatHeight") val webformatHeight: Int = 0,
         @SerializedName("webformatWidth") val webformatWidth: Int = 0,
         @SerializedName("likes") val likes: Int = 0,
@@ -55,6 +84,16 @@ data class HitsItem(
         @SerializedName("previewWidth") val previewWidth: Int = 0,
         @SerializedName("userImageURL") val userImageURL: String = "",
         @SerializedName("previewURL") val previewURL: String = ""
-)
+) {
+
+    init {
+
+    }
+
+    fun deserialize(json: String): List<HitsItem> {
+        val type = object : TypeToken<List<HitsItem>>() {}.type
+        return Gson().fromJson(json, type)
+    }
+}
 
 

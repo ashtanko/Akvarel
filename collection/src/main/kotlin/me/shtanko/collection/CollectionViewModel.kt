@@ -40,7 +40,7 @@ class CollectionViewModel @Inject constructor(
 
     init {
         data.value = Command.Run
-        //collectionUseCase.loadCollection()
+        collectionUseCase.loadCollection()
     }
 
 }

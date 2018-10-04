@@ -7,6 +7,8 @@ import dagger.Component
 import dagger.Module
 import dagger.Provides
 import me.shtanko.core.di.ToolsProvider
+import me.shtanko.model.HitsItem
+import me.shtanko.model.RuntimeTypeAdapterFactory
 import me.shtanko.network.BuildConfig
 import me.shtanko.network.GSON_DATE_FORMAT
 import me.shtanko.network.NetworkClient
@@ -38,10 +40,17 @@ object RestModule {
     @Provides
     @JvmStatic
     @Singleton
-    fun provideGson(): Gson = GsonBuilder()
-            .setPrettyPrinting()
-            .setDateFormat(GSON_DATE_FORMAT)
-            .create()
+    fun provideGson(): Gson {
+
+        val adapter = RuntimeTypeAdapterFactory
+                .of(HitsItem::class.java)
+
+        return GsonBuilder()
+                .setPrettyPrinting()
+                .setDateFormat(GSON_DATE_FORMAT)
+                .registerTypeAdapterFactory(adapter)
+                .create()
+    }
 
     @Provides
     @JvmStatic

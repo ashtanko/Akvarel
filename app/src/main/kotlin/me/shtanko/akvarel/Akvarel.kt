@@ -36,7 +36,7 @@ import javax.inject.Inject
 
 class Akvarel : Application(), App {
 
-    val appComponent: AppComponent by lazy { AppComponent.Initializer.init(this@Akvarel) }
+    private val appComponent: AppComponent by lazy { AppComponent.Initializer.init(this@Akvarel) }
 
     @Inject
     lateinit var logger: Logger
@@ -45,7 +45,7 @@ class Akvarel : Application(), App {
         strictMode()
         super.onCreate()
         appComponent.inject(this)
-        //logger.startPoint()
+        logger.startPoint()
         val fabric = Fabric.Builder(this)
                 .kits(Crashlytics())
                 .debuggable(true)

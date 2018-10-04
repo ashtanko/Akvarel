@@ -33,9 +33,14 @@ import me.shtanko.collection.di.CollectionComponent
 import me.shtanko.common.extensions.observe
 import me.shtanko.common.extensions.viewModel
 import me.shtanko.common.ui.BaseFragment
-import me.shtanko.core.App
 import me.shtanko.core.Logger
+import me.shtanko.core.appComponent
 import javax.inject.Inject
+
+fun CollectionFragment.provideInjection() {
+    CollectionComponent.Initializer.init(appComponent)
+            .inject(this)
+}
 
 class CollectionFragment : BaseFragment() {
 
@@ -53,19 +58,15 @@ class CollectionFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        CollectionComponent.Initializer.init((activity?.applicationContext as App).getAppComponent())
-                .inject(this@CollectionFragment)
-
+        provideInjection()
         collectionViewModel = viewModel(viewModelFactory) {
             observe(data, ::handleRun)
         }
-
-        logger.d("EEEEE", collectionViewModel)
     }
 
     private fun handleRun(command: CollectionViewModel.Command?) {
         command?.let {
-            logger.d("handleRun", it)
+            logger.d("command: ", command, it)
         }
     }
 

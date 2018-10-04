@@ -32,7 +32,7 @@ interface CollectionUseCase {
 }
 
 class CollectionUseCaseImpl @Inject constructor(
-        val repo: CollectionRepository
+        private val repo: CollectionRepository
 ) : CollectionUseCase {
     override fun loadCollection() {
         repo.getCollection()

@@ -53,7 +53,7 @@ class DispatchQueue(
                 handler?.postDelayed(runnable, delay)
             }
         } catch (ex: Exception) {
-            // Ours.error(ex)
+            // LoggerImpl.error(ex)
         }
     }
 

@@ -36,6 +36,7 @@ dependencies {
 
   //region NETWORK/IO
   implementation dependencies.gson
+  implementation dependencies.fuel
   //endregion
 }
 

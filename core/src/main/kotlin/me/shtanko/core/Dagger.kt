@@ -22,43 +22,14 @@
  * SOFTWARE.
  */
 
-package me.shtanko.categories
+package me.shtanko.core
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import me.shtanko.categories.di.CategoriesComponent
-import me.shtanko.common.ui.BaseFragment
-import me.shtanko.core.Logger
-import me.shtanko.core.appComponent
-import javax.inject.Inject
+import android.app.Activity
+import androidx.fragment.app.Fragment
+import me.shtanko.core.di.ApplicationProvider
 
-fun CategoriesFragment.provideInjection() {
-    CategoriesComponent.Initializer.init(appComponent)
-            .inject(this)
-}
+val Fragment.appComponent: ApplicationProvider
+    get() = (activity?.applicationContext as App).getAppComponent()
 
-class CategoriesFragment : BaseFragment() {
-
-    @Inject
-    lateinit var logger: Logger
-
-    companion object {
-        val instance = CategoriesFragment()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        provideInjection()
-    }
-
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        return LayoutInflater.from(activity)
-                .inflate(R.layout.fragment_categories, container, false)
-    }
-}
+val Activity.appComponent: ApplicationProvider
+    get() = (applicationContext as App).getAppComponent()
