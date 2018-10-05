@@ -1,4 +1,4 @@
-# :tropical_fish: Akvarel Is An Android Application For Pixabay 
+# :tropical_fish: Akvarel Is An Android Application For Pixabay [![Build Status](https://travis-ci.org/AdamLuisSean/Akvarel.svg?branch=master)](https://travis-ci.org/AdamLuisSean/Akvarel)
 # \[Work in progress\]
 
 This is a pet project that shows how to implement Architecture Components in Android
