@@ -23,10 +23,10 @@ interface AppComponent : ApplicationProvider {
 
                 val toolsProvider: ToolsProvider = ToolsComponent.Initializer.init(app)
 
-                val collectionProvider = RepositoryRepoComponent.Initializer.init(toolsProvider)
+                val repositoryProvider = RepositoryRepoComponent.Initializer.init(toolsProvider)
 
                 return DaggerAppComponent.builder()
-                        .collectionProvider(collectionProvider)
+                        .repositoryProvider(repositoryProvider)
                         .toolsProvider(toolsProvider)
                         .build()
             }

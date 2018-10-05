@@ -178,6 +178,7 @@ hs_err_pid*
 !gradle-wrapper.jar
 !app/src/dev/google-services.json
 config/*.json
+!config/google-services.json
 fastlane
 mainscreen
 ./about/about_sample

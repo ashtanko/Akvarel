@@ -157,6 +157,7 @@ before_script:
 - echo $ANDROID_TARGET
 - echo $ANDROID_ABI
 - ././config/ci-before-script.sh
+- ././config/cp-google-services-json.sh
 
 #- echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
 #- emulator -avd test -no-skin -no-window &
