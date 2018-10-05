@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-cp google-services.json ../app/google-services.json
+cp ./config/google-services.json app/google-services1.json
