@@ -50,41 +50,55 @@ android:
   - '.+'
 
 install:
-# List and delete unnecessary components to free space
-- sdkmanager --list || true
-
-- sdkmanager --uninstall "system-images;android-15;default;armeabi-v7a"
-- sdkmanager --uninstall "system-images;android-16;default;armeabi-v7a"
-- sdkmanager --uninstall "system-images;android-17;default;armeabi-v7a"
-- sdkmanager --uninstall "system-images;android-18;default;armeabi-v7a"
-- sdkmanager --uninstall "system-images;android-19;default;armeabi-v7a"
-- sdkmanager --uninstall "system-images;android-21;default;armeabi-v7a"
-- sdkmanager --uninstall "extras;google;google_play_services"
-- sdkmanager --uninstall "extras;android;support"
-- sdkmanager --uninstall "platforms;android-10"
-- sdkmanager --uninstall "platforms;android-15"
-- sdkmanager --uninstall "platforms;android-16"
-- sdkmanager --uninstall "platforms;android-17"
-- sdkmanager --uninstall "platforms;android-18"
-- sdkmanager --uninstall "platforms;android-19"
-- sdkmanager --uninstall "platforms;android-20"
-- sdkmanager --uninstall "platforms;android-21"
-- sdkmanager --uninstall "build-tools;21.1.2"
-- echo yes | sdkmanager "tools"
-- echo yes | sdkmanager "platforms;android-28" # Latest platform required by SDK tools
-- echo yes | sdkmanager "extras;android;m2repository"
-- echo yes | sdkmanager "extras;google;m2repository"
 - mkdir "$ANDROID_HOME/licenses" || true
 - echo y | android update sdk -u -a -t tools
 - echo y | android update sdk -u -a -t platform-tools
 - echo y | android update sdk -u -a -t build-tools-28.0.2
 - echo y | android update sdk -u -a -t android-28
+- echo y | android update sdk -u -a -t android-27
 - echo y | android update sdk -u -a -t extra-google-m2repository
 - echo y | android update sdk -u -a -t extra-android-m2repository
 - echo y | android update sdk -u -a -t android-sdk-preview-license
 - echo y | android update sdk -u -a -t android-sdk-license
-- echo yes | ${ANDROID_HOME}/tools/bin/sdkmanager "platforms;android-27"
-- echo yes | ${ANDROID_HOME}/tools/bin/sdkmanager "platforms;android-28"
+- echo yes | sdkmanager "platforms;android-28" # Latest platform required by SDK tools
+
+#
+#install:
+## List and delete unnecessary components to free space
+#- sdkmanager --list || true
+#
+#- sdkmanager --uninstall "system-images;android-15;default;armeabi-v7a"
+#- sdkmanager --uninstall "system-images;android-16;default;armeabi-v7a"
+#- sdkmanager --uninstall "system-images;android-17;default;armeabi-v7a"
+#- sdkmanager --uninstall "system-images;android-18;default;armeabi-v7a"
+#- sdkmanager --uninstall "system-images;android-19;default;armeabi-v7a"
+#- sdkmanager --uninstall "system-images;android-21;default;armeabi-v7a"
+#- sdkmanager --uninstall "extras;google;google_play_services"
+#- sdkmanager --uninstall "extras;android;support"
+#- sdkmanager --uninstall "platforms;android-10"
+#- sdkmanager --uninstall "platforms;android-15"
+#- sdkmanager --uninstall "platforms;android-16"
+#- sdkmanager --uninstall "platforms;android-17"
+#- sdkmanager --uninstall "platforms;android-18"
+#- sdkmanager --uninstall "platforms;android-19"
+#- sdkmanager --uninstall "platforms;android-20"
+#- sdkmanager --uninstall "platforms;android-21"
+#- sdkmanager --uninstall "build-tools;21.1.2"
+#- echo yes | sdkmanager "tools"
+#- echo yes | sdkmanager "platforms;android-28" # Latest platform required by SDK tools
+#- echo yes | sdkmanager "extras;android;m2repository"
+#- echo yes | sdkmanager "extras;google;m2repository"
+#- mkdir "$ANDROID_HOME/licenses" || true
+#- echo y | android update sdk -u -a -t tools
+#- echo y | android update sdk -u -a -t platform-tools
+#- echo y | android update sdk -u -a -t build-tools-28.0.2
+#- echo y | android update sdk -u -a -t android-28
+#- echo y | android update sdk -u -a -t extra-google-m2repository
+#- echo y | android update sdk -u -a -t extra-android-m2repository
+#- echo y | android update sdk -u -a -t android-sdk-preview-license
+#- echo y | android update sdk -u -a -t android-sdk-license
+#- echo yes | ${ANDROID_HOME}/tools/bin/sdkmanager "platforms;android-27"
+#- echo yes | ${ANDROID_HOME}/tools/bin/sdkmanager "platforms;android-28"
 
 
 before_cache:
