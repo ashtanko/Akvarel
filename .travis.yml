@@ -22,7 +22,7 @@ env:
   - ANDROID_BUILD_TOOLS_VERSION=28.0.2
   - ANDROID_ABI=armeabi-v7a
   - ANDROID_TAG=google_apis
-  - CODECOV_TOKEN=c3c594dd-b509-4ca0-9fd0-248dc1af7cf3
+  - CODECOV_TOKEN=9f07b72b-7d4f-4e39-be15-a6f5044b83b7
   - TEST_TYPE=unit
 
 android:
