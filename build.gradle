@@ -81,8 +81,8 @@ ext {
     runnerRulesVersion = '1.1.0-alpha3'
     roomVersion = "1.1.1"
     glideVersion = "4.8.0-SNAPSHOT"
-    rxjavaVersion = '2.2.0'
-    rxandroidVersion = '2.0.2'
+    rxjavaVersion = '2.2.2'
+    rxandroidVersion = '2.1.0'
     materialVersion = '1.0.0-alpha3'
     hockeyappVersion = '5.1.0'
     constraintlayoutVersion = '1.1.2'

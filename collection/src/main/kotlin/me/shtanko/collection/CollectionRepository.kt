@@ -25,13 +25,15 @@
 package me.shtanko.collection
 
 import android.annotation.SuppressLint
+import io.reactivex.Observable
 import me.shtanko.core.Logger
 import me.shtanko.core.collection.CollectionRepository
+import me.shtanko.model.Hit
 import me.shtanko.network.NetworkClient
 import javax.inject.Inject
 
 class CollectionRepositoryImpl @Inject constructor(
-        val client: NetworkClient,
+        private val client: NetworkClient,
         val logger: Logger
 ) : CollectionRepository {
 
@@ -39,7 +41,7 @@ class CollectionRepositoryImpl @Inject constructor(
     @SuppressLint("CheckResult")
     override fun getCollection() {
         client.get().subscribe { t1, t2 ->
-            logger.d(t1.total, t1.totalHits, t2)
+            logger.d("DATA FROM API: ", t1.total, t1.totalHits, "size: ${t1.hits.size}", "hits: ${t1.hits}", t2)
         }
 
     }

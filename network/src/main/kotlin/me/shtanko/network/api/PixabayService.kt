@@ -1,7 +1,7 @@
 package me.shtanko.network.api
 
 import io.reactivex.Single
-import me.shtanko.model.Hit
+import me.shtanko.model.HitEntity
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -22,6 +22,6 @@ interface PixabayService {
             @Query("order") order: String = "popular",
             @Query("page") page: Int = 1,
             @Query("per_page") perPage: Int = 5
-    ): Single<Hit>
+    ): Single<HitEntity>
 
 }

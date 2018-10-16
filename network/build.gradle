@@ -50,11 +50,11 @@ dependencies {
   implementation dependencies.adapterRxjava
   implementation dependencies.loggingInterceptor
 
-  implementation dependencies.fuel
-  implementation dependencies.fuelAndroid
+  //implementation dependencies.fuel
+  //implementation dependencies.fuelAndroid
   //implementation dependencies.fuelLiveData
-  implementation dependencies.fuelRxJava
-  implementation dependencies.fuelGson
+  //implementation dependencies.fuelRxJava
+  //implementation dependencies.fuelGson
   //endregion
 
   //region RX
