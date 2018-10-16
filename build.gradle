@@ -30,7 +30,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0-alpha12'
+        classpath 'com.android.tools.build:gradle:3.3.0-alpha13'
         classpath "com.diffplug.spotless:spotless-plugin-gradle:3.14.0"
         classpath('com.dicedmelon.gradle:jacoco-android:0.1.2') {
             exclude group: 'org.codehaus.groovy', module: 'groovy-all'
