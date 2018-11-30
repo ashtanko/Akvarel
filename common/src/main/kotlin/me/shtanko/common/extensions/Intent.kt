@@ -44,3 +44,12 @@ fun intentTo(addressableActivity: AddressableActivity): Intent {
 object About : AddressableActivity {
     override val className = "$PACKAGE_NAME.about.AboutActivity"
 }
+
+/**
+ * Search Activity
+ */
+object Search : AddressableActivity {
+    override val className: String
+        get() = "$PACKAGE_NAME.search.SearchActivity"
+
+}

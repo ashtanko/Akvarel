@@ -23,21 +23,18 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:dist="http://schemas.android.com/apk/distribution"
-    package="me.shtanko.settings">
+          package="me.shtanko.akvarel.settings">
 
-  <application>
-    <activity android:name=".SettingsActivity">
+    <application>
 
-    </activity>
-  </application>
+        <activity android:name=".SettingsActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
+        </activity>
 
-  <dist:module
-      dist:onDemand="true"
-      dist:title="@string/title_settings">
-    <dist:fusing dist:include="true"/>
-  </dist:module>
-
+    </application>
 
 </manifest>
 

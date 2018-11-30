@@ -28,6 +28,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import me.shtanko.categories.di.CategoriesComponent
 import me.shtanko.common.ui.BaseFragment
 import me.shtanko.core.Logger
@@ -36,13 +38,15 @@ import javax.inject.Inject
 
 fun CategoriesFragment.provideInjection() {
     CategoriesComponent.Initializer.init(appComponent)
-            .inject(this)
+        .inject(this)
 }
 
 class CategoriesFragment : BaseFragment() {
 
     @Inject
     lateinit var logger: Logger
+
+    private lateinit var categoriesAdapter: CategoriesAdapter
 
     companion object {
         val instance = CategoriesFragment()
@@ -54,11 +58,31 @@ class CategoriesFragment : BaseFragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return LayoutInflater.from(activity)
-                .inflate(R.layout.fragment_categories, container, false)
+            .inflate(R.layout.fragment_categories, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        categoriesAdapter = CategoriesAdapter().apply {
+            val list = mutableListOf<Pair<Int, String>>()
+            for (i in 0 until 200) {
+                list.add(Pair<Int, String>(R.drawable.violin, "Music $i"))
+            }
+            categories = list
+        }
+
+        val categories = activity?.findViewById<RecyclerView>(R.id.categories)
+        categories?.apply {
+            layoutManager = GridLayoutManager(activity, 2)
+            setHasFixedSize(true)
+            adapter = categoriesAdapter
+        }
+
     }
 }

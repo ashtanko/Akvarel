@@ -32,7 +32,7 @@ interface CategoriesUseCase {
 }
 
 class CategoriesUseCaseImpl @Inject constructor(
-        private val categoriesRepository: CategoriesRepository
+    private val categoriesRepository: CategoriesRepository
 ) : CategoriesUseCase {
 
     override val categories: List<Block>

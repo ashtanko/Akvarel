@@ -23,5 +23,6 @@
   -->
 
 <resources>
-  <string name="app_name">categories</string>
+    <string name="app_name">categories</string>
+    <string name="category">Category</string>
 </resources>

@@ -24,6 +24,10 @@
 
 package me.shtanko.core.collection
 
+import io.reactivex.Flowable
+import io.reactivex.Single
+import me.shtanko.model.Hit
+
 interface CollectionRepository {
-    fun getCollection()
+    fun getCollection(page:Int): Flowable<Hit>
 }

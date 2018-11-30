@@ -1,4 +1,4 @@
-apply plugin: 'com.android.dynamic-feature'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
@@ -17,14 +17,9 @@ android {
     }
 }
 
-apply from: '../config/feature-signing-config.gradle'
-apply from: '../config/kotlin-source-sets.gradle'
-
 dependencies {
 
     def dependencies = ext.deps
-
-    implementation project(':app')
     implementation project(':common')
     implementation project(':core')
     implementation project(':network')

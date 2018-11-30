@@ -24,8 +24,7 @@
 
 package me.shtanko.collection
 
-import android.annotation.SuppressLint
-import io.reactivex.Observable
+import io.reactivex.Flowable
 import me.shtanko.core.Logger
 import me.shtanko.core.collection.CollectionRepository
 import me.shtanko.model.Hit
@@ -33,17 +32,12 @@ import me.shtanko.network.NetworkClient
 import javax.inject.Inject
 
 class CollectionRepositoryImpl @Inject constructor(
-        private val client: NetworkClient,
-        val logger: Logger
+    private val client: NetworkClient,
+    val logger: Logger
 ) : CollectionRepository {
 
-    //todo lint
-    @SuppressLint("CheckResult")
-    override fun getCollection() {
-        client.get().subscribe { t1, t2 ->
-            logger.d("DATA FROM API: ", t1.total, t1.totalHits, "size: ${t1.hits.size}", "hits: ${t1.hits}", t2)
-        }
-
+    override fun getCollection(page: Int): Flowable<Hit> {
+        return client.get(page).map { it.toHit() }
     }
 
 }

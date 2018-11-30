@@ -1,25 +1,23 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-  <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="colorPrimary">@color/indigo</item>
-    <item name="colorPrimaryDark">@color/indigo_dark</item>
-    <item name="colorAccent">@color/indigo</item>
-    <item name="colorControlActivated">?colorPrimary</item>
-    <item name="android:windowBackground">@color/white</item>
-    <item name="android:statusBarColor">@color/status_bar</item>
-    <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-    <item name="android:navigationBarColor">@color/indigo_dark</item>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/indigo</item>
+        <item name="colorPrimaryDark">@color/indigo_dark</item>
+        <item name="colorAccent">@color/indigo</item>
+        <item name="colorControlActivated">?colorPrimary</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:statusBarColor">@color/status_bar</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:navigationBarColor">@color/indigo_dark</item>
+    </style>
 
-  </style>
+    <style name="AppTheme.Launcher" parent="@style/AppTheme.LightNav"></style>
 
-  <style name="AppTheme.Launcher" parent="@style/AppTheme.LightNav">
-  </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
-  <style name="AppTheme.NoActionBar">
-    <item name="windowActionBar">false</item>
-    <item name="windowNoTitle">true</item>
-  </style>
-
-  <style name="AppTheme.LightNav" parent="AppTheme.NoActionBar"/>
+    <style name="AppTheme.LightNav" parent="AppTheme.NoActionBar" />
 
 </resources>

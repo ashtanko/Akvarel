@@ -1,41 +1,47 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 def ext = rootProject.ext
 
 android {
-  compileSdkVersion ext.compileSdkVersion
+    compileSdkVersion ext.compileSdkVersion
 
-  defaultConfig {
-    minSdkVersion ext.minSdkVersion
-    targetSdkVersion ext.targetSdkVersion
-    versionCode ext.commitsCount
-    versionName "1.0.0"
+    defaultConfig {
+        minSdkVersion ext.minSdkVersion
+        targetSdkVersion ext.targetSdkVersion
+        versionCode ext.commitsCount
+        versionName "1.0.0"
 
-    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-  }
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
 }
 
 apply from: '../config/kotlin-source-sets.gradle'
 
 dependencies {
-  def dependencies = ext.deps
+    def dependencies = ext.deps
 
-  //region ANDROID SDK
-  api dependencies.appcompat
-  api dependencies.ktx
-  api dependencies.lifecycle
-  //endregion
+    //region ANDROID SDK
+    api dependencies.appcompat
+    api dependencies.ktx
+    api dependencies.lifecycle
+    //endregion
 
-  //region DI
-  compileOnly dependencies.dagger
-  //endregion
+    //region DI
+    compileOnly dependencies.dagger
+    //endregion
 
-  //region TEST
-  testImplementation dependencies.junit
-  androidTestImplementation dependencies.runner
-  androidTestImplementation dependencies.espressoCore
-  //endregion
+    //region IMAGE PROCESSING
+    implementation dependencies.glide
+    kapt dependencies.glideCompiler
+    //endregion
+
+    //region TEST
+    testImplementation dependencies.junit
+    androidTestImplementation dependencies.runner
+    androidTestImplementation dependencies.espressoCore
+    //endregion
 }
 
 apply from: "../ktlint.gradle"

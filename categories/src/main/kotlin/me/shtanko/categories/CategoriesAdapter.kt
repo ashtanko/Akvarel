@@ -24,4 +24,47 @@
 
 package me.shtanko.categories
 
-class CategoriesAdapter
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.recyclerview.widget.RecyclerView
+import kotlin.properties.Delegates
+
+internal class CategoriesViewHolder(item: View) : RecyclerView.ViewHolder(item) {
+    private val categoryImage: AppCompatImageView = item.findViewById(R.id.category_icon)
+    private val categoryTitle: AppCompatTextView = item.findViewById(R.id.category_title)
+
+    internal fun bindTo(category: Pair<Int, String>) {
+        categoryImage.setImageResource(category.first)
+        categoryTitle.text = category.second
+    }
+
+}
+
+internal class CategoriesAdapter : RecyclerView.Adapter<CategoriesViewHolder>() {
+
+    var categories: List<Pair<Int, String>> by Delegates.observable(emptyList()) { _, _, _ ->
+        notifyDataSetChanged()
+    }
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): CategoriesViewHolder {
+        return CategoriesViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.row_category, parent, false)
+        )
+    }
+
+    override fun getItemCount(): Int {
+        return categories.size
+    }
+
+    override fun onBindViewHolder(holder: CategoriesViewHolder, position: Int) {
+        val pos = categories[position]
+        holder.bindTo(pos)
+    }
+
+}

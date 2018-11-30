@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
   ~ Copyright (c) 2018 Alexey Shtanko
@@ -24,10 +23,19 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
+
+    <com.takusemba.multisnaprecyclerview.MultiSnapRecyclerView
+        android:id="@+id/categories"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:msrv_gravity="center"
+        app:msrv_snap_count="2">
+
+    </com.takusemba.multisnaprecyclerview.MultiSnapRecyclerView>
 
 </LinearLayout>

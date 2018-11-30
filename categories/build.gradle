@@ -29,55 +29,57 @@ apply plugin: 'kotlin-kapt'
 def ext = rootProject.ext
 
 android {
-  compileSdkVersion ext.compileSdkVersion
+    compileSdkVersion ext.compileSdkVersion
 
-  defaultConfig {
-    minSdkVersion ext.minSdkVersion
-    targetSdkVersion ext.targetSdkVersion
-    versionCode ext.commitsCount
-    versionName "1.0.0"
+    defaultConfig {
+        minSdkVersion ext.minSdkVersion
+        targetSdkVersion ext.targetSdkVersion
+        versionCode ext.commitsCount
+        versionName "1.0.0"
 
-    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-  }
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
 }
 
 apply from: '../config/kotlin-source-sets.gradle'
 
 dependencies {
-  def dependencies = ext.deps
+    def dependencies = ext.deps
 
-  //region modules
-  implementation project(':core')
-  implementation project(':model')
-  implementation project(':common')
-  implementation project(':network')
-  //endregion
+    //region modules
+    implementation project(':core')
+    implementation project(':model')
+    implementation project(':common')
+    implementation project(':network')
+    //endregion
 
-  //region KOTLIN
-  implementation dependencies.kotlin
-  //endregion
+    //region KOTLIN
+    implementation dependencies.kotlin
+    //endregion
 
-  //region RX
-  implementation dependencies.rxjava
-  implementation dependencies.rxandroid
-  //endregion
+    //region RX
+    implementation dependencies.rxjava
+    implementation dependencies.rxandroid
+    //endregion
 
-  //region ANDROID SDK
-  api dependencies.appcompat
-  api dependencies.material
-  api dependencies.constraintlayout
-  //endregion
+    //region ANDROID SDK
+    api dependencies.appcompat
+    api dependencies.material
+    api dependencies.constraintlayout
+    //endregion
 
-  //region DI
-  kapt dependencies.daggerCompiler
-  implementation dependencies.dagger
-  //endregion
+    //region DI
+    kapt dependencies.daggerCompiler
+    implementation dependencies.dagger
+    //endregion
 
-  //region TEST
-  testImplementation dependencies.junit
-  androidTestImplementation dependencies.runner
-  androidTestImplementation dependencies.espressoCore
-  //endregion
+    implementation dependencies.multisnaprecyclerview
+
+    //region TEST
+    testImplementation dependencies.junit
+    androidTestImplementation dependencies.runner
+    androidTestImplementation dependencies.espressoCore
+    //endregion
 }
 
 apply from: "../ktlint.gradle"

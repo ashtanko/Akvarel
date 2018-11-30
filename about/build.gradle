@@ -1,51 +1,49 @@
-apply plugin: 'com.android.dynamic-feature'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 def ext = rootProject.ext
 
 android {
-  compileSdkVersion ext.compileSdkVersion
+    compileSdkVersion ext.compileSdkVersion
 
-  defaultConfig {
-    minSdkVersion ext.minSdkVersion
-    targetSdkVersion ext.targetSdkVersion
-    versionCode ext.commitsCount
-    versionName "1.0.0"
+    defaultConfig {
+        minSdkVersion ext.minSdkVersion
+        targetSdkVersion ext.targetSdkVersion
+        versionCode ext.commitsCount
+        versionName "1.0.0"
 
-    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-  }
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
 }
 
-apply from: '../config/feature-signing-config.gradle'
 apply from: '../config/kotlin-source-sets.gradle'
 
 dependencies {
-  def dependencies = ext.deps
+    def dependencies = ext.deps
 
-  //region modules
-  implementation project(':app')
-  implementation project(':core')
-  implementation project(':common')
-  //endregion
+    //region modules
+    implementation project(':core')
+    implementation project(':common')
+    //endregion
 
-  //region KOTLIN
-  implementation dependencies.kotlin
-  //endregion
+    //region KOTLIN
+    implementation dependencies.kotlin
+    //endregion
 
-  //region DI
-  implementation dependencies.dagger
-  kapt dependencies.daggerCompiler
-  //endregion
+    //region DI
+    implementation dependencies.dagger
+    kapt dependencies.daggerCompiler
+    //endregion
 
-  //region TEST
-  testImplementation dependencies.junit
-  //endregion
+    //region TEST
+    testImplementation dependencies.junit
+    //endregion
 }
 
 kapt {
-  generateStubs = true
-  correctErrorTypes = true
+    generateStubs = true
+    correctErrorTypes = true
 }
 
 apply from: "../ktlint.gradle"

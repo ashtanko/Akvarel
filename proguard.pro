@@ -66,3 +66,6 @@
 -keepclassmembernames class kotlinx.** {
     volatile <fields>;
 }
+-keep class me.shtanko.akvarel.about.** { *; }
+-keep class me.shtanko.akvarel.search.** { *; }
+

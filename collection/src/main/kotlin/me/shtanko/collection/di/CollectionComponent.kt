@@ -35,11 +35,12 @@ import me.shtanko.common.di.ViewModelKey
 import me.shtanko.common.viewmodel.ViewModelFactory
 import me.shtanko.core.collection.CollectionRepository
 import me.shtanko.core.di.ApplicationProvider
-import me.shtanko.core.di.RepositoryProvider
 import me.shtanko.core.di.FragmentScope
+import me.shtanko.core.di.RepositoryProvider
 import me.shtanko.core.di.ToolsProvider
 import me.shtanko.network.di.DaggerNetworkComponent
 import me.shtanko.network.di.NetworkProvider
+import kotlin.text.Typography.dagger
 
 @Module
 interface CollectionModule {
@@ -66,8 +67,8 @@ interface CollectionRepoModule {
 }
 
 @Component(
-        dependencies = [ToolsProvider::class, NetworkProvider::class],
-        modules = [CollectionRepoModule::class]
+    dependencies = [ToolsProvider::class, NetworkProvider::class],
+    modules = [CollectionRepoModule::class]
 )
 interface RepositoryRepoComponent : RepositoryProvider {
 
@@ -76,13 +77,13 @@ interface RepositoryRepoComponent : RepositoryProvider {
             fun init(toolsProvider: ToolsProvider): RepositoryProvider {
 
                 val networkProvider = DaggerNetworkComponent.builder()
-                        .toolsProvider(toolsProvider)
-                        .build()
+                    .toolsProvider(toolsProvider)
+                    .build()
 
                 return DaggerRepositoryRepoComponent.builder()
-                        .toolsProvider(toolsProvider)
-                        .networkProvider(networkProvider)
-                        .build()
+                    .toolsProvider(toolsProvider)
+                    .networkProvider(networkProvider)
+                    .build()
 
             }
         }
@@ -91,8 +92,8 @@ interface RepositoryRepoComponent : RepositoryProvider {
 }
 
 @Component(
-        dependencies = [ApplicationProvider::class],
-        modules = [CollectionModule::class]
+    dependencies = [ApplicationProvider::class],
+    modules = [CollectionModule::class]
 )
 @FragmentScope
 interface CollectionComponent {
@@ -102,12 +103,12 @@ interface CollectionComponent {
     class Initializer private constructor() {
         companion object {
             fun init(
-                    applicationProvider: ApplicationProvider
+                applicationProvider: ApplicationProvider
             ): CollectionComponent {
 
                 return DaggerCollectionComponent.builder()
-                        .applicationProvider(applicationProvider)
-                        .build()
+                    .applicationProvider(applicationProvider)
+                    .build()
             }
         }
     }

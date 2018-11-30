@@ -27,7 +27,9 @@ package me.shtanko.model
 import com.google.gson.annotations.SerializedName
 
 data class Hit(
-        val total: Int = 0
+        val total: Int = 0,
+        val items: List<HitItem>
+
 )
 
 data class HitItem(
@@ -41,7 +43,8 @@ data class HitEntity(
 ) {
 
     fun toHit(): Hit {
-        return Hit(totalHits)
+        val items = hits.map { it.toHitItem() }
+        return Hit(totalHits, items)
     }
 
     override fun toString(): String {
@@ -79,7 +82,28 @@ data class HitItemEntity(
     }
 
     override fun toString(): String {
-        return "HitItemEntity(largeImageURL='$largeImageURL', webformatHeight=$webformatHeight, webformatWidth=$webformatWidth, likes=$likes, imageWidth=$imageWidth, id=$id, userId=$userId, views=$views, comments=$comments, pageURL='$pageURL', imageHeight=$imageHeight, webformatURL='$webformatURL', type='$type', previewHeight=$previewHeight, tags='$tags', downloads=$downloads, user='$user', favorites=$favorites, imageSize=$imageSize, previewWidth=$previewWidth, userImageURL='$userImageURL', previewURL='$previewURL')"
+        return "HitItemEntity(largeImageURL='$largeImageURL', " +
+                "webformatHeight=$webformatHeight, " +
+                "webformatWidth=$webformatWidth, " +
+                "likes=$likes, " +
+                "imageWidth=$imageWidth, " +
+                "id=$id, " +
+                "userId=$userId, " +
+                "views=$views, " +
+                "comments=$comments, " +
+                "pageURL='$pageURL', " +
+                "imageHeight=$imageHeight, " +
+                "webformatURL='$webformatURL', " +
+                "type='$type', " +
+                "previewHeight=$previewHeight, " +
+                "tags='$tags', " +
+                "downloads=$downloads, " +
+                "user='$user', " +
+                "favorites=$favorites, " +
+                "imageSize=$imageSize, " +
+                "previewWidth=$previewWidth, " +
+                "userImageURL='$userImageURL', " +
+                "previewURL='$previewURL')"
     }
 }
 

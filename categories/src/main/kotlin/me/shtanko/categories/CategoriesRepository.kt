@@ -37,8 +37,8 @@ class CategoriesRepositoryImpl @Inject constructor() : CategoriesRepository {
 
     override val categories by lazy {
         listOf(
-                Block("Animals"),
-                Block("Colors")
+            Block("Animals"),
+            Block("Colors")
         )
     }
 

@@ -17,12 +17,13 @@
 
 //region screens modules
 include ':app'
+include ':favorites'
 include ':about'
-include ':settings'
+//include ':settings'
 include ':collection'
 include ':categories'
 include ':other'
-include ':search'
+//include ':search'
 //endregion
 
 //region other modules

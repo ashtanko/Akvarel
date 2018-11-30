@@ -54,8 +54,8 @@ interface CategoriesModule {
 }
 
 @Component(
-        dependencies = [ApplicationProvider::class],
-        modules = [CategoriesModule::class]
+    dependencies = [ApplicationProvider::class],
+    modules = [CategoriesModule::class]
 )
 @FragmentScope
 interface CategoriesComponent {
@@ -64,11 +64,11 @@ interface CategoriesComponent {
     class Initializer private constructor() {
         companion object {
             fun init(
-                    applicationProvider: ApplicationProvider
+                applicationProvider: ApplicationProvider
             ): CategoriesComponent {
                 return DaggerCategoriesComponent.builder()
-                        .applicationProvider(applicationProvider)
-                        .build()
+                    .applicationProvider(applicationProvider)
+                    .build()
             }
         }
     }

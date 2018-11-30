@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ MIT License
+  ~
+  ~ Copyright (c) 2018 Alexey Shtanko
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Exists for inheritance purposes -->
+    <style name="Akvarel" parent="Akvarel.Base" />
+
+    <style name="Akvarel.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/default_primary</item>
+        <item name="colorPrimaryDark">@color/default_primary_dark</item>
+        <item name="colorAccent">@color/default_accent</item>
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:textColorPrimaryInverse">@color/text_light</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">
+            @color/default_primary_dark
+        </item>
+        <item name="android:textColor">@color/text_dark</item>
+        <item name="android:windowBackground">@color/light_grey</item>
+        <item name="android:colorBackground">@color/light_grey</item>
+    </style>
+
+    <style name="Akvarel.Blue">
+        <item name="colorPrimary">@color/theme_blue_primary</item>
+        <item name="colorPrimaryDark">@color/theme_blue_primary</item>
+        <item name="android:textColorPrimary">@color/theme_blue_text</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">
+            @color/theme_blue_primary_dark
+        </item>
+        <item name="android:windowBackground">@color/theme_blue_background</item>
+        <item name="colorAccent">@color/theme_blue_accent</item>
+    </style>
+
+    <style name="Akvarel.Green">
+        <item name="colorPrimary">@color/theme_green_primary</item>
+        <item name="colorPrimaryDark">@color/theme_green_primary</item>
+        <item name="android:textColorPrimary">@color/theme_green_text</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">
+            @color/theme_green_primary_dark
+        </item>
+        <item name="android:windowBackground">@color/theme_green_background</item>
+        <item name="colorAccent">@color/theme_green_accent</item>
+    </style>
+
+    <style name="Akvarel.Purple">
+        <item name="colorPrimary">@color/theme_purple_primary</item>
+        <item name="colorPrimaryDark">@color/theme_purple_primary</item>
+        <item name="android:textColorPrimary">@color/theme_purple_text</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">
+            @color/theme_purple_primary_dark
+        </item>
+        <item name="android:windowBackground">@color/theme_purple_background</item>
+        <item name="colorAccent">@color/theme_purple_accent</item>
+    </style>
+
+    <style name="Akvarel.Red">
+        <item name="colorPrimary">@color/theme_red_primary</item>
+        <item name="colorPrimaryDark">@color/theme_red_primary</item>
+        <item name="android:textColorPrimary">@color/theme_red_text</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">
+            @color/theme_red_primary_dark
+        </item>
+        <item name="android:windowBackground">@color/theme_red_background</item>
+        <item name="colorAccent">@color/theme_red_accent</item>
+    </style>
+
+    <style name="Akvarel.Yellow">
+        <item name="colorPrimary">@color/theme_yellow_primary</item>
+        <item name="colorPrimaryDark">@color/theme_yellow_primary</item>
+        <item name="android:textColorPrimary">@color/theme_yellow_text</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">
+            @color/theme_yellow_primary_dark
+        </item>
+        <item name="android:windowBackground">@color/theme_yellow_background</item>
+        <item name="colorAccent">@color/theme_yellow_accent</item>
+    </style>
+
+
+</resources>

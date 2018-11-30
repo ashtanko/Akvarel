@@ -24,17 +24,15 @@
 
 package me.shtanko.other
 
-import android.app.ActivityOptions
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import me.shtanko.common.extensions.About
-import me.shtanko.common.extensions.intentTo
 import me.shtanko.common.ui.BaseFragment
 import me.shtanko.core.App
 import me.shtanko.core.Logger
+import me.shtanko.core.navigation.OnAboutClickListener
 import me.shtanko.other.di.OthersComponent
 import javax.inject.Inject
 
@@ -42,6 +40,8 @@ class OtherFragment : BaseFragment() {
 
     @Inject
     lateinit var logger: Logger
+
+    lateinit var clickListener: OnAboutClickListener
 
     companion object {
         val instance = OtherFragment()
@@ -51,29 +51,35 @@ class OtherFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         val appComponent = (activity?.applicationContext as App).getAppComponent()
         OthersComponent.Initializer.init(appComponent)
-                .inject(this)
+            .inject(this)
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return LayoutInflater.from(activity)
-                .inflate(R.layout.fragment_other, container, false)
+            .inflate(R.layout.fragment_other, container, false)
     }
 
     override fun onViewCreated(
-            view: View,
-            savedInstanceState: Bundle?
+        view: View,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val button = view.findViewById<Button>(R.id.about)
-        button.setOnClickListener {
-            val intent = intentTo(About)
-            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
+        val aboutButton = view.findViewById<Button>(R.id.about)
+        val searchButton = view.findViewById<Button>(R.id.search)
+        aboutButton.setOnClickListener {
+            clickListener.openAboutScreen()
         }
+
+        searchButton.setOnClickListener {
+            //todo open search activity
+        }
+
+
         logger.d(this.javaClass.name, " onViewCreated".toUpperCase(), " view: $view")
     }
 

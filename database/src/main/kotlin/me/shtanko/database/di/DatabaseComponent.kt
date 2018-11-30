@@ -47,16 +47,17 @@ class DatabaseModule {
     @Singleton
     @Provides
     fun provideDatabase(context: Context): AppDatabase {
-        return Room.databaseBuilder(context, AppDatabase::class.java,
-                APP_DATABASE_NAME
+        return Room.databaseBuilder(
+            context, AppDatabase::class.java,
+            APP_DATABASE_NAME
         )
-                .build()
+            .build()
     }
 }
 
 @Singleton
 @Component(
-        dependencies = [ToolsProvider::class],
-        modules = [DatabaseModule::class]
+    dependencies = [ToolsProvider::class],
+    modules = [DatabaseModule::class]
 )
 interface DatabaseComponent : DatabaseProvider

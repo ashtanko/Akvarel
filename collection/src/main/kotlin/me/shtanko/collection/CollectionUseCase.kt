@@ -24,18 +24,22 @@
 
 package me.shtanko.collection
 
+import io.reactivex.Flowable
 import me.shtanko.core.collection.CollectionRepository
+import me.shtanko.model.Hit
 import javax.inject.Inject
 
 interface CollectionUseCase {
-    fun loadCollection()
+    fun loadCollection(page: Int = 1): Flowable<Hit>
 }
 
 class CollectionUseCaseImpl @Inject constructor(
-        private val repo: CollectionRepository
+    private val repo: CollectionRepository
 ) : CollectionUseCase {
-    override fun loadCollection() {
-        repo.getCollection()
+
+
+    override fun loadCollection(page: Int): Flowable<Hit> {
+        return repo.getCollection(page)
     }
 
 }

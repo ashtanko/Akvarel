@@ -1,6 +1,6 @@
 package me.shtanko.network.api
 
-import io.reactivex.Single
+import io.reactivex.Flowable
 import me.shtanko.model.HitEntity
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -21,7 +21,7 @@ interface PixabayService {
             @Query("safesearch") safeSearch: Boolean = false,
             @Query("order") order: String = "popular",
             @Query("page") page: Int = 1,
-            @Query("per_page") perPage: Int = 5
-    ): Single<HitEntity>
+            @Query("per_page") perPage: Int = 25
+    ): Flowable<HitEntity>
 
 }

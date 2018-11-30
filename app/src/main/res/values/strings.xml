@@ -6,4 +6,5 @@
   <string name="tab_collection_title">Collection</string>
   <string name="tab_categories_title">Categories</string>
   <string name="tab_settings_title">Settings</string>
+  <string name="tab_favorites_title">Favorites</string>
 </resources>

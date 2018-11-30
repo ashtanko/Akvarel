@@ -4,39 +4,45 @@ apply plugin: 'kotlin-android'
 def ext = rootProject.ext
 
 android {
-  compileSdkVersion ext.compileSdkVersion
+    compileSdkVersion ext.compileSdkVersion
 
-  defaultConfig {
-    minSdkVersion ext.minSdkVersion
-    targetSdkVersion ext.targetSdkVersion
-    versionCode ext.commitsCount
-    versionName "1.0.0"
+    defaultConfig {
+        minSdkVersion ext.minSdkVersion
+        targetSdkVersion ext.targetSdkVersion
+        versionCode ext.commitsCount
+        versionName "1.0.0"
 
-    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-  }
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
 }
 
 apply from: '../config/kotlin-source-sets.gradle'
 
 dependencies {
-  def dependencies = ext.deps
+    def dependencies = ext.deps
 
-  //region ANDROID SDK
-  implementation dependencies.appcompat
-  implementation dependencies.lifecycle
-  //endregion
+    //region ANDROID SDK
+    api dependencies.appcompat
+    api dependencies.lifecycle
+    //endregion
 
-  //region KOTLIN
-  api dependencies.kotlin
-  //endregion
+    //region KOTLIN
+    api dependencies.kotlin
+    //endregion
 
-  implementation dependencies.dagger
+    //region RX
+    api dependencies.rxjava
+    api dependencies.rxandroid
+    //endregion
 
-  //region TEST
-  testImplementation dependencies.junit
-  androidTestImplementation dependencies.runner
-  androidTestImplementation dependencies.espressoCore
-  //endregion
+    api dependencies.dagger
+
+    //region TEST
+    testImplementation dependencies.junit
+    androidTestImplementation dependencies.runner
+    androidTestImplementation dependencies.espressoCore
+    implementation project(path: ':model')
+    //endregion
 }
 
 apply from: "../ktlint.gradle"

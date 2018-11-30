@@ -24,28 +24,43 @@
 
 package me.shtanko.akvarel
 
-import android.app.Application
+//import androidx.multidex.MultiDex
+import android.content.Context
 import android.os.StrictMode
 import com.crashlytics.android.Crashlytics
+import com.google.android.play.core.splitcompat.SplitCompatApplication
 import io.fabric.sdk.android.Fabric
 import me.shtanko.akvarel.di.AppComponent
 import me.shtanko.core.App
 import me.shtanko.core.Logger
 import me.shtanko.core.di.ApplicationProvider
+import timber.log.Timber
 import javax.inject.Inject
 
-class Akvarel : Application(), App {
+class Akvarel : SplitCompatApplication(), App {
 
     private val appComponent: AppComponent by lazy { AppComponent.Initializer.init(this@Akvarel) }
 
     @Inject
     lateinit var logger: Logger
 
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        //MultiDex.install(this)
+    }
+
     override fun onCreate() {
         strictMode()
         super.onCreate()
         appComponent.inject(this)
         logger.startPoint()
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        } else {
+            Timber.plant(CrashlyticsTree())
+        }
+
         val fabric = Fabric.Builder(this)
                 .kits(Crashlytics())
                 .debuggable(true)
@@ -67,7 +82,6 @@ class Akvarel : Application(), App {
             )
             StrictMode.setVmPolicy(
                     StrictMode.VmPolicy.Builder()
-                            .detectLeakedClosableObjects()
                             .detectLeakedClosableObjects()
                             .detectActivityLeaks()
                             .penaltyLog()

@@ -8,7 +8,7 @@ android {
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
                 def apkNickname = "Akvarel"
-                def apkSuffix = "app"
+                def apkSuffix = ""
                 def apkPath = "../../../../../apkfiles/${buildType.name}"
                 def newName = "${apkNickname}${apkSuffix}_v.${defaultConfig.versionName}_${defaultConfig.versionCode}_${buildType.name}_${releaseTime()}"
                 def fileName = outputFile.name.replace("app-${buildType.name}", "$apkPath/$newName")

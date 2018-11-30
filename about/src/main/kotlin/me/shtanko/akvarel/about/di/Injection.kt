@@ -24,7 +24,7 @@
 
 package me.shtanko.akvarel.about.di
 
-import me.shtanko.akvarel.about.AboutActivity
+import me.shtanko.akvarel.about.AboutFragment
 
-fun AboutActivity.inject() {
+fun AboutFragment.inject() {
 }

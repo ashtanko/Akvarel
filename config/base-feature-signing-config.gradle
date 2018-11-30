@@ -3,9 +3,9 @@ apply from: '../config/common-signing-config.gradle'
 android {
   buildTypes {
     release {
-      minifyEnabled true
-      zipAlignEnabled true
-      pseudoLocalesEnabled true
+      minifyEnabled false
+      //zipAlignEnabled true
+      //pseudoLocalesEnabled true
       debuggable false
       signingConfig signingConfigs.release
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), '../proguard.pro'
@@ -13,7 +13,7 @@ android {
 
     debug {
       debuggable true
-      minifyEnabled true
+      minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), '../proguard.pro'
       useProguard false
       testCoverageEnabled true

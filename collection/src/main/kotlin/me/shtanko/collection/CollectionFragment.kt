@@ -29,17 +29,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import me.shtanko.collection.di.CollectionComponent
 import me.shtanko.common.extensions.observe
 import me.shtanko.common.extensions.viewModel
 import me.shtanko.common.ui.BaseFragment
 import me.shtanko.core.Logger
 import me.shtanko.core.appComponent
+import me.shtanko.model.HitItem
 import javax.inject.Inject
 
 fun CollectionFragment.provideInjection() {
     CollectionComponent.Initializer.init(appComponent)
-            .inject(this)
+        .inject(this)
 }
 
 class CollectionFragment : BaseFragment() {
@@ -56,11 +59,39 @@ class CollectionFragment : BaseFragment() {
 
     private lateinit var collectionViewModel: CollectionViewModel
 
+    private lateinit var collectionAdapter: CollectionAdapter
+
+    private var categories: RecyclerView? = null
+
+
+    private var loading = false
+    private var pageNumber = 1
+    private var lastVisibleItem = 0
+    private var totalItemCount = 0
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         provideInjection()
         collectionViewModel = viewModel(viewModelFactory) {
             observe(data, ::handleRun)
+            observe(items, ::handleItems)
+            observe(isLoading, ::handleLoading)
+        }
+    }
+
+    private fun handleLoading(isLoading: Boolean?) {
+        isLoading?.let {
+            this.loading = it
+        }
+    }
+
+    private fun handleItems(items: List<HitItem>?) {
+        logger.d("items: ", items?.size, items)
+        val list = items?.map(HitItem::largeImageURL)
+        list?.let {
+            collectionAdapter.add(it)
+            //collectionAdapter.categories = it
         }
     }
 
@@ -71,12 +102,56 @@ class CollectionFragment : BaseFragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return LayoutInflater.from(activity)
-                .inflate(R.layout.fragment_collection, container, false)
+            .inflate(R.layout.fragment_collection, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        collectionAdapter = CollectionAdapter(activity)
+        collectionViewModel.getItems()
+
+        categories = activity?.findViewById<RecyclerView>(R.id.collection)
+        categories?.also {
+            it.layoutManager = LinearLayoutManager(activity)
+            //it.setHasFixedSize(true)
+            it.adapter = collectionAdapter
+        }
+
+        subscribeToLoadMore()
+    }
+
+
+    private fun subscribeToLoadMore() {
+        categories?.let {
+            it.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    val layoutManager = it.layoutManager as LinearLayoutManager
+                    totalItemCount = layoutManager.itemCount
+                    lastVisibleItem = layoutManager.findLastVisibleItemPosition()
+
+                    logger.d("addOnScrollListener: ", loading, pageNumber, totalItemCount, lastVisibleItem)
+
+                    if (!loading && totalItemCount <= (lastVisibleItem + 1)) {
+                        pageNumber++
+                        collectionViewModel.onNextPage(pageNumber)
+                        loading = true
+                    }
+
+                }
+            })
+        }
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        collectionViewModel.onDestroy()
+    }
 }
