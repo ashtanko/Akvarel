@@ -1,0 +1,58 @@
+stages:
+  - build
+  
+image: openjdk:8-jdk
+
+variables:
+  ANDROID_COMPILE_SDK: "28"
+  ANDROID_BUILD_TOOLS: "28.0.0"
+
+cache:
+  paths:
+     - .gradle/
+     
+.sdk_apt: &before_docker
+  before_script:
+    - set -euo pipefail
+    - apt-get --quiet update --yes
+      && apt-get --quiet install --yes --no-install-recommends wget
+                                                               tar
+                                                               unzip
+                                                               lib32stdc++6
+                                                               lib32z1
+                                                               file
+                                                               mesa-utils
+                                                               pciutils
+      && rm -rf /var/lib/apt/lists/*
+    - export GRADLE_USER_HOME="$(pwd)/.gradle"
+    - export ANDROID_HOME="$(pwd)/.androidhome"
+    - export PATH="${ANDROID_HOME}/emulator/:${ANDROID_HOME}/tools/bin/:${ANDROID_HOME}/tools/:${ANDROID_HOME}/platform-tools/:${PATH}"
+    - ci/before.sh
+    - chmod +x ./gradlew
+    
+.build: &build_def
+  <<: *before_docker
+  stage: build
+  script:
+    - ./gradlew assemble -PdisablePreDex
+    - ./gradlew assembleAndroidTest -PdisablePreDex
+  artifacts:
+    paths:
+    - app/build/outputs/
+    - build/logs/
+
+.test: &test_def
+  <<: *before_docker
+  stage: build
+  script:
+    - ./gradlew check -PdisablePreDex
+  artifacts:
+
+build:jdk-1.8:
+  <<: *build_def
+
+unit-tests:jdk-1.8:
+  <<: *test_def
+
+
+
