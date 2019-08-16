@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "888504967995",
+    "firebase_url": "https://akvarel-209314.firebaseio.com",
+    "project_id": "akvarel-209314",
+    "storage_bucket": "akvarel-209314.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888504967995:android:a4b48f7be7da2410",
+        "android_client_info": {
+          "package_name": "me.shtanko.akvarel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "888504967995-sa8o7b05elknjpdtgqdf979l9h0im93v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyIOBlw1yzlPBBvXhEmsKeSmheDin5wQc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
